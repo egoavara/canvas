@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"github.com/go-gl/mathgl/mgl32"
 	"math"
-	"sort"
 	"sync"
 )
 
@@ -14,58 +13,9 @@ type cell struct {
 	Cover  int32
 	Area   int32
 }
-
 func (s cell) String() string {
 	//return fmt.Sprintf("cell(x : %4d, %v - %v)", s.X, s.L0.Vec2(), s.L1.Vec2())
 	return fmt.Sprintf("cell(x : %4d, cover : %4d, area : %4d)", s.X, s.Cover, s.Area)
-}
-func Raster(p Precision, cell []cellstream, dst []uint8, stride int32) {
-	width := int32(p)
-	for y, stream := range cell {
-		var x, cover, area int32 = 0, 0, 0
-		var prev int32 = 0
-
-		for _, v := range stream {
-			if x != v.X {
-				prev = effective(width, cover+prev, area)
-				dst[stride*int32(y)+x] = toRange(prev, width)
-				x = v.X
-				cover = 0
-				area = 0
-			}
-			cover += v.Cover
-			area += v.Area
-
-		}
-		prev = effective(width, cover+prev, area)
-		dst[stride*int32(y)+x] = toRange(prev, width)
-	}
-}
-func Cellize(height uint32, p Precision, points []mgl32.Vec3) (res []cellstream) {
-	points = AlignGrid(p, points)
-	res = make([]cellstream, height)
-	for i := 1; i < len(points); i++ {
-		l0, l1 := points[i-1], points[i]
-		cx, cy := int32((l0[0]+l1[0])/2), int32((l0[1]+l1[1])/2)
-		cover := int32((l1[1] - l0[1]) * float32(p))
-		len0 := int32((l0[0] - float32(cx)) * float32(p))
-		len1 := int32((l1[0] - float32(cx)) * float32(p))
-		area := int32((len0 + len1) * cover)
-
-		//
-		//
-		res[cy] = append(res[cy], &cell{
-			L0:    l0,
-			L1:    l1,
-			X:     cx,
-			Cover: cover,
-			Area:  area,
-		})
-	}
-	for _, l := range res {
-		sort.Sort(l)
-	}
-	return
 }
 func AlignGrid(p Precision, points []mgl32.Vec3) (res []mgl32.Vec3) {
 	from := 0
