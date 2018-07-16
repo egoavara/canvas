@@ -71,7 +71,6 @@ func AlignGrid(p Precision, points []mgl32.Vec3) (res []mgl32.Vec3) {
 	from := 0
 	wg := new(sync.WaitGroup)
 	ch := make(chan []mgl32.Vec3)
-	defer close(ch)
 	mtx := new(sync.Mutex)
 	go func() {
 		mtx.Lock()
@@ -98,6 +97,7 @@ func AlignGrid(p Precision, points []mgl32.Vec3) (res []mgl32.Vec3) {
 		}
 	}
 	wg.Wait()
+	close(ch)
 	mtx.Lock()
 	return res
 }

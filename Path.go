@@ -4,7 +4,7 @@ import (
 	"github.com/go-gl/mathgl/mgl32"
 	"math"
 	"io"
-	"github.com/iamGreedy/align"
+	"github.com/iamGreedy/commons/align"
 )
 
 const capData = 128
@@ -24,22 +24,19 @@ type (
 		CubeTo(p0, p1, to mgl32.Vec2)
 		CloseTo()
 
-		Query(qtype QueryType, reader io.Reader)
+		Query(qtype QueryType, reader io.Reader) error
 	}
 	TextPath interface {
 		Follow(text string, pathfn func(i InnerPath))
 		Draw(text string, pos mgl32.Vec2, align align.Align)
 	}
-	QueryType uint32
 	strokeInnerPath struct {
 		to *Path
 		pen  mgl32.Vec2
 		from mgl32.Vec2
 	}
+	QueryType uint32
 )
-
-
-
 
 func NewPath() *Path {
 	return &Path{

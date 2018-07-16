@@ -4,6 +4,9 @@ import (
 	"github.com/go-gl/mathgl/mgl32"
 	"io"
 	"math"
+	"github.com/iamGreedy/psvg"
+	"github.com/pkg/errors"
+	"fmt"
 )
 
 type fillInnerPath struct {
@@ -64,6 +67,15 @@ func (s *fillInnerPath) CloseTo() {
 	s.to.Data = append(s.to.Data, s.from.Vec3(1), Spacer)
 }
 
-func (s *fillInnerPath) Query(qtype QueryType, reader io.Reader) {
-	s.to.Data = append(s.to.Data, s.from.Vec3(1), Spacer)
+func (s *fillInnerPath) Query(qtype QueryType, reader io.Reader) error {
+	//s.to.Data = append(s.to.Data, s.from.Vec3(1), Spacer)
+	switch qtype {
+	case SVGQuery:
+		p, err := psvg.NewRendererFromReader(reader)
+		if err != nil {
+			return err
+		}
+		p.Render(s)
+	}
+	return errors.New(fmt.Sprintf("Unknown QueryType(%v)", qtype))
 }

@@ -2,7 +2,7 @@ package canvas
 
 import (
 	"github.com/go-gl/mathgl/mgl32"
-	"github.com/iamGreedy/axis"
+	"github.com/iamGreedy/commons/axis"
 )
 
 type Transform mgl32.Mat3
