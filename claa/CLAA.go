@@ -50,6 +50,13 @@ const (
 	ALIGNED         DataType = iota
 )
 
+func (s *CLAA) GetPrecision() Precision{
+	return s.p
+}
+func (s *CLAA) SetPrecision(p Precision) {
+	s.Clear()
+	s.p =p
+}
 func (s *CLAA) Data(datatype DataType, points ...mgl32.Vec3) {
 	switch datatype {
 	case RAW:

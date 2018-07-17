@@ -1,22 +1,13 @@
 package claa
 
 import (
-	"fmt"
 	"github.com/go-gl/mathgl/mgl32"
 	"math"
 	"sync"
 )
 
-type cell struct {
-	L0, L1 mgl32.Vec3
-	X      int32
-	Cover  int32
-	Area   int32
-}
-func (s cell) String() string {
-	//return fmt.Sprintf("cell(x : %4d, %v - %v)", s.X, s.L0.Vec2(), s.L1.Vec2())
-	return fmt.Sprintf("cell(x : %4d, cover : %4d, area : %4d)", s.X, s.Cover, s.Area)
-}
+
+
 func AlignGrid(p Precision, points []mgl32.Vec3) (res []mgl32.Vec3) {
 	from := 0
 	wg := new(sync.WaitGroup)
@@ -57,13 +48,13 @@ func alignGrid(p Precision, points []mgl32.Vec3) (res []mgl32.Vec3) {
 	var verticals []mgl32.Vec3
 	for i := 0; i < len(points)-1; i++ {
 		verticals = append(verticals, points[i])
-		verticals = append(verticals, Split(points[i], points[i+1], 0)...)
+		verticals = append(verticals, split(points[i], points[i+1], 0)...)
 	}
 	verticals = append(verticals, points[len(points)-1])
 	Normalize(p, verticals...)
 	for i := 0; i < len(verticals)-1; i++ {
 		res = append(res, verticals[i])
-		res = append(res, Split(verticals[i], verticals[i+1], 1)...)
+		res = append(res, split(verticals[i], verticals[i+1], 1)...)
 	}
 	res = append(res, verticals[len(verticals)-1])
 	Normalize(p, res...)
@@ -81,19 +72,24 @@ func Normalize(p Precision, points ...mgl32.Vec3) {
 	}
 	return
 }
-func SplitSize(l0, l1 float32) int {
+func SplitSize(p Precision, l0, l1 mgl32.Vec3) int {
 	if l0 > l1 {
 		l0, l1 = l1, l0
 	}
 	return int(math.Ceil(float64(l1)) - math.Ceil(float64(l0)))
 }
-
+func splitSize(l0, l1 float32) int {
+	if l0 > l1 {
+		l0, l1 = l1, l0
+	}
+	return int(math.Ceil(float64(l1)) - math.Ceil(float64(l0)))
+}
 // 0 = vertical
 // 1 = horizontal
 // l0, l1 is normalized points
-func Split(l0, l1 mgl32.Vec3, using int) (res []mgl32.Vec3) {
+func split(l0, l1 mgl32.Vec3, using int) (res []mgl32.Vec3) {
 	notusing := using ^ 1
-	res = make([]mgl32.Vec3, SplitSize(l0[notusing], l1[notusing]))
+	res = make([]mgl32.Vec3, splitSize(l0[notusing], l1[notusing]))
 	if len(res) == 0 {
 		return
 	}
@@ -132,16 +128,4 @@ func Split(l0, l1 mgl32.Vec3, using int) (res []mgl32.Vec3) {
 	}
 
 	return
-}
-
-type cellstream []*cell
-
-func (s cellstream) Len() int {
-	return len(s)
-}
-func (s cellstream) Less(i, j int) bool {
-	return s[i].X < s[j].X
-}
-func (s cellstream) Swap(i, j int) {
-	s[i], s[j] = s[j], s[i]
 }
