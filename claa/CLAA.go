@@ -53,6 +53,12 @@ const (
 func (s *CLAA) GetPrecision() Precision{
 	return s.p
 }
+func (s *CLAA) GetWidth() int{
+	return s.w
+}
+func (s *CLAA) GetHeight() int{
+	return s.h
+}
 func (s *CLAA) SetPrecision(p Precision) {
 	s.Clear()
 	s.p =p

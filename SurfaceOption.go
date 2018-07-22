@@ -1,7 +1,6 @@
 package canvas
 
 import (
-	"github.com/iamGreedy/commons/colors"
 	"image"
 	"image/color"
 	"image/draw"
@@ -91,7 +90,6 @@ func (Driver) OptionType() OptionType {
 func (Clear) OptionType() OptionType {
 	return Write | Init
 }
-
 func (FrameBuffer) OptionType() OptionType {
 	return Read | Write
 }
@@ -132,3 +130,19 @@ type (
 	// = Send
 	WaitFlush struct{}
 )
+
+func (UseBuffer) OptionType() OptionType {
+	return Send
+}
+func (BufferLength) OptionType() OptionType {
+	return Read
+}
+func (CloseBuffer) OptionType() OptionType {
+	return Send
+}
+func (FlushBuffer) OptionType() OptionType {
+	return Send
+}
+func (WaitFlush) OptionType() OptionType {
+	return Send
+}

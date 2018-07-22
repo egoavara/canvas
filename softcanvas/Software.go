@@ -6,6 +6,7 @@ import (
 	"image"
 	"image/color"
 	"image/draw"
+	"sync"
 )
 
 const (
@@ -18,11 +19,43 @@ const (
 
 type Software struct {
 	//
-	size image.Point
-	pix  []uint8
-	mix  canvas.MixOperation
+	size      image.Point
+	pix       []uint8
+	mix       canvas.MixOperation
+	precision claa.Precision
 	//
-	claa *claa.CLAA
+	linelck []*sync.Mutex
+	works   *sync.WaitGroup
+	//
+	q map[canvas.Shader]q
+	//
+	pool *sync.Pool
+}
+type q struct {
+	p *canvas.Path
+	t *canvas.Transform
+}
+
+func NewSoftware(w, h int, options ...canvas.Option) *Software {
+	res := new(Software)
+	res.size = image.Pt(w, h)
+	res.precision = claa.X16
+	res.works = new(sync.WaitGroup)
+	res.setup()
+	for _, o := range options {
+		if o.OptionType()&canvas.Init == canvas.Init {
+			switch t := o.(type) {
+			case canvas.Clear:
+				res.Option(t)
+			case canvas.MixOperation:
+				res.Option(t)
+			case OptionCLAAPrecision:
+				res.Option(t)
+
+			}
+		}
+	}
+	return res
 }
 
 func (s *Software) Support(opt ...canvas.Option) bool {
@@ -80,37 +113,6 @@ func (s *Software) support(opt canvas.Option) bool {
 
 func (s *Software) Option(opt canvas.Option) canvas.Option {
 
-	//	switch o := opt.(type) {
-	//	case OptionCLAAPrecision:
-	//	case *OptionCLAAPrecision:
-	//	case canvas.Width:
-	//		s.size.X = int(o)
-	//		s.setup(s.claa.GetPrecision())
-	//		return canvas.Width(s.size.X)
-	//	case *canvas.Width:
-	//		if o == nil{
-	//			o = new(canvas.Width)
-	//		}
-	//		*o = canvas.Width(s.size.X)
-	//	case canvas.Height:
-	//		return canvas.Height(s.size.Y)
-	//	case *canvas.Height:
-	//		if o == nil{
-	//			o = new(canvas.Height)
-	//		}
-	//		*o = canvas.Height(s.size.Y)
-	//		return *o
-	//	case canvas.Size:
-	//		return canvas.Size(s.size)
-	//	case *canvas.Size:
-	//		if o == nil{
-	//			o = new(canvas.Size)
-	//		}
-	//		*o = canvas.Size(s.size)
-	//		return *o
-	//	}
-	//	return nil
-
 	switch o := opt.(type) {
 	case canvas.Width:
 		s.size.X = int(o)
@@ -123,14 +125,53 @@ func (s *Software) Option(opt canvas.Option) canvas.Option {
 		*o = canvas.Width(s.size.X)
 		return o
 	case canvas.Height:
+		s.size.Y = int(o)
+		s.setup()
+		return canvas.Height(s.size.Y)
 	case *canvas.Height:
+		if o == nil {
+			o = new(canvas.Height)
+		}
+		*o = canvas.Height(s.size.Y)
+		return o
 	case canvas.Size:
+		s.size = image.Point(o)
+		s.setup()
+		return canvas.Size(s.size)
 	case *canvas.Size:
+		if o == nil {
+			o = new(canvas.Size)
+		}
+		*o = canvas.Size(s.size)
+		return o
 	case *canvas.Driver:
+		if o == nil {
+			o = new(canvas.Driver)
+		}
+		*o = Driver
+		return o
 	case canvas.Clear:
+		s.Clear(color.RGBA(o))
 	case canvas.FrameBuffer:
+		temp := &image.RGBA{
+			Pix:    s.pix,
+			Stride: s.size.X * pixL,
+			Rect:   image.Rect(0, 0, s.size.X, s.size.Y),
+		}
+		orfr := image.RGBA(o)
+		draw.Draw(temp, temp.Rect, &orfr, image.ZP, draw.Src)
+		return o
 	case *canvas.FrameBuffer:
+		if o == nil {
+			o = new(canvas.FrameBuffer)
+		}
+		o.Stride = pixL * s.size.X
+		o.Rect = image.Rect(0, 0, s.size.X, s.size.Y)
+		o.Pix = make([]uint8, len(s.pix))
+		copy(o.Pix, s.pix)
+		return o
 	case canvas.UseBuffer:
+
 	case *canvas.UseBuffer:
 	case *canvas.BufferLength:
 	case canvas.CloseBuffer:
@@ -141,14 +182,14 @@ func (s *Software) Option(opt canvas.Option) canvas.Option {
 	case *canvas.WaitFlush:
 		//
 	case OptionCLAAPrecision:
-		s.claa.SetPrecision(claa.Precision(o))
-		return OptionCLAAPrecision(s.claa.GetPrecision())
+		s.precision = claa.Precision(o)
+		return OptionCLAAPrecision(s.precision)
 	case *OptionCLAAPrecision:
 		if o == nil {
 			o = new(OptionCLAAPrecision)
 		}
-		*o = OptionCLAAPrecision(s.claa.GetPrecision())
-		return *o
+		*o = OptionCLAAPrecision(s.precision)
+		return o
 	}
 	return nil
 }
@@ -156,29 +197,49 @@ func (s *Software) Option(opt canvas.Option) canvas.Option {
 func (s *Software) Query(query *canvas.Path, shader canvas.Shader, transform *canvas.Transform) error {
 	panic("implement me")
 }
+func (s *Software) query(query *canvas.Path, shader canvas.Shader, transform *canvas.Transform) {
+	go func() {
 
-func NewSoftware(w, h int, options ...canvas.Option) *Software {
-	res := new(Software)
-	res.size = image.Pt(w, h)
-	res.pix = make([]uint8, w*h*pixL)
-	res.claa = claa.NewCLAA(claa.X16, w, h)
-	for _, o := range options {
-		if o.OptionType()&canvas.Init == canvas.Init {
-			switch t := o.(type) {
-			case canvas.Clear:
-				res.Option(t)
-			case canvas.MixOperation:
-				res.Option(t)
-			case OptionCLAAPrecision:
-				res.Option(t)
-
-			}
-		}
-	}
-	return res
+	}()
 }
 
+// private
 func (s *Software) setup() {
 	s.pix = make([]uint8, s.size.X*s.size.Y*pixL)
-	s.claa = claa.NewCLAA(s.claa.GetPrecision(), s.size.X, s.size.Y)
+	s.linelck = make([]*sync.Mutex, s.size.Y)
+	s.pool = &sync.Pool{
+		New: func() interface{} {
+			return claa.NewCLAA(s.precision, s.size.X, s.size.Y)
+		},
+	}
+	for i := range s.linelck {
+		s.linelck[i] = new(sync.Mutex)
+	}
+	//s.claa = claa.NewCLAA(s.claa.GetPrecision(), s.size.X, s.size.Y)
+}
+func (s *Software) usebuf() {
+	if s.q == nil {
+		s.q = make(map[canvas.Shader]q)
+	}
+}
+func (s *Software) flush() {
+	for shader, q := range s.q {
+		go s.query(q.p, shader, q.t)
+	}
+}
+func (s *Software) closebuf() {
+	s.q = nil
+}
+
+//
+func (s *Software) Clear(c color.RGBA) {
+	for y := 0; y < s.size.Y; y++ {
+		for x := 0; x < s.size.X; x++ {
+			offset := s.size.X*y + x*pixL
+			s.pix[offset+pixR] = c.R
+			s.pix[offset+pixG] = c.G
+			s.pix[offset+pixB] = c.B
+			s.pix[offset+pixA] = c.A
+		}
+	}
 }
