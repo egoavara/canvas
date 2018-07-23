@@ -14,6 +14,6 @@ func Setup(name Driver, driver func(w, h int, options ... Option) (Surface, erro
 	manager[name] = driver
 }
 
-func NewSurface(driver Driver, width, height int, options ... Option)  {
-
+func NewSurface(driver Driver, width, height int, options ... Option) (Surface, error) {
+	return manager[driver](width, height, options...)
 }

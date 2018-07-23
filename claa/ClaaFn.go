@@ -72,12 +72,6 @@ func Normalize(p Precision, points ...mgl32.Vec3) {
 	}
 	return
 }
-func SplitSize(p Precision, l0, l1 mgl32.Vec3) int {
-	if l0 > l1 {
-		l0, l1 = l1, l0
-	}
-	return int(math.Ceil(float64(l1)) - math.Ceil(float64(l0)))
-}
 func splitSize(l0, l1 float32) int {
 	if l0 > l1 {
 		l0, l1 = l1, l0

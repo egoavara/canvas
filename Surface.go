@@ -1,10 +1,5 @@
 package canvas
 
-import (
-	"image"
-	"image/draw"
-)
-
 type Surface interface {
 	// Check Support options
 	Support(opt ... Option) bool

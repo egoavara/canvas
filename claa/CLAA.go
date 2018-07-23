@@ -113,6 +113,7 @@ func (s *CLAA) Result(dst []uint8, stride, pixsize, offset int) {
 				if res == 0 {
 					continue
 				}
+
 				offset := stride*y + pixsize*x + offset
 				dst[offset] = toRange(res, width)
 			}
@@ -144,7 +145,6 @@ func (s *CLAA) SyncResult(dst []uint8, stride, pixsize, offset int) {
 func effective(w, c, a int32) int32 {
 	return w*c - a/2
 }
-
 func toRange(value int32, ip int32) uint8 {
 	m := 16 / ip
 	res := value * m * m

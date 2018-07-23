@@ -18,26 +18,41 @@ type OptionType uint8
 // If Option is getter .Option() retunr Pointer of passed value, or nil(if it was not read available Option)
 //
 const (
-	// Set value to Surface
-	// getter
-	Read OptionType = 1 << iota
-	// Set value to Surface
-	// setter
-	// ex) .Option(<Write>(value))
-	Write OptionType = 1 << iota
-	// Init is special case for write which can pass to constructor
-	// setter
-	// ex) NewSurface(w, h, <Init>)
-	Init OptionType = 1 << iota
-	Send OptionType = 1 << iota
-	// Can be delay syncro reason
-	Sync OptionType = 1 << iota
+	Read  OptionType = 0x01
+	Write OptionType = 0x02
+	Init  OptionType = 0x04
+	Send  OptionType = 0x08
+	Error OptionType = 0x80
 	//
-	// reserve0  	OptionType = 1 << iota
-	// reserve1 	OptionType = 1 << iota
-	// empty 		OptionType = 1 << iota
-	// empty  		OptionType = 1 << iota
+	// Read  		OptionType
+	// Write  		OptionType
+	// Init  		OptionType
+	// Send  		OptionType
+	//
+	// empty  		OptionType
+	// empty 		OptionType
+	// empty 		OptionType
+	// ErrorFlag  	OptionType
 )
+
+// There is two type Fail, one is .Option(...) return error wrap by ResultFail
+// Other is return nil, which is so obious, no need to explain
+//
+type ResultFail struct {
+	msg error
+}
+func (ResultFail) OptionType() OptionType {
+	return Error
+}
+func (s ResultFail) Error() string {
+	return s.msg.Error()
+}
+func IsFail(o Option) bool {
+	if o == nil{
+		return true
+	}
+	return o.OptionType() & Error == Error
+}
 
 // Essensial support option
 type (
@@ -63,12 +78,10 @@ type (
 	// = Write | Init
 	//
 	Clear color.RGBA
-
 	// GetResult image
 	//
 	// = Read | Write
 	FrameBuffer image.RGBA
-
 	// GetResult image
 	//
 	// = Read | Write | Init
@@ -93,9 +106,17 @@ func (Clear) OptionType() OptionType {
 func (FrameBuffer) OptionType() OptionType {
 	return Read | Write
 }
-func (MixOperation) OptionType() OptionType {
-	return Read | Write| Init
+func (s FrameBuffer) Convert() *image.RGBA {
+	return &image.RGBA{
+		Stride: s.Stride,
+		Rect:   s.Rect,
+		Pix:    s.Pix,
+	}
 }
+func (MixOperation) OptionType() OptionType {
+	return Read | Write | Init
+}
+
 var (
 	Src  = MixOperation(draw.Src)
 	Over = MixOperation(draw.Over)

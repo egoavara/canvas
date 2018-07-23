@@ -2,10 +2,16 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="fbcc4772-140e-4260-925f-a849d9f376f7" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SurfaceOption.go" beforeDir="false" afterPath="$PROJECT_DIR$/SurfaceOption.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/claa/CLAA.go" beforeDir="false" afterPath="$PROJECT_DIR$/claa/CLAA.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/softcanvas/Software.go" beforeDir="false" afterPath="$PROJECT_DIR$/softcanvas/Software.go" afterDir="false" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/softcanvas/Software_test.go" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change beforePath="$PROJECT_DIR$/CanvasManager.go" afterPath="$PROJECT_DIR$/CanvasManager.go" />
+      <change beforePath="$PROJECT_DIR$/Surface.go" afterPath="$PROJECT_DIR$/Surface.go" />
+      <change beforePath="$PROJECT_DIR$/SurfaceOption.go" afterPath="$PROJECT_DIR$/SurfaceOption.go" />
+      <change beforePath="$PROJECT_DIR$/claa/CLAA.go" afterPath="$PROJECT_DIR$/claa/CLAA.go" />
+      <change beforePath="$PROJECT_DIR$/claa/ClaaFn.go" afterPath="$PROJECT_DIR$/claa/ClaaFn.go" />
+      <change beforePath="$PROJECT_DIR$/claa/test.png" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/softcanvas/Software.go" afterPath="$PROJECT_DIR$/softcanvas/Software.go" />
+      <change beforePath="$PROJECT_DIR$/util_Capture.go" afterPath="$PROJECT_DIR$/util_Capture.go" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -16,102 +22,138 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="Software.go" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Software.go" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/softcanvas/Software.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="459">
-              <caret line="42" column="34" selection-start-line="42" selection-start-column="34" selection-end-line="42" selection-end-column="34" />
+            <state relative-caret-position="406">
+              <caret line="273" column="3" lean-forward="true" selection-start-line="273" selection-start-column="3" selection-end-line="273" selection-end-column="13" />
               <folding>
-                <element signature="e#137#196#0" />
-                <element signature="e#718#889#0" />
-                <element signature="e#749#785#0" />
-                <element signature="e#789#832#0" />
-                <element signature="e#836#879#0" />
-                <element signature="n#!!block;n#Support#0" />
-                <element signature="e#532#577#0" />
-                <element signature="e#553#574#0" />
-                <element signature="n#!!block;n#support#0" />
-                <element signature="e#668#700#0" />
-                <element signature="e#702#735#0" />
-                <element signature="e#737#770#0" />
-                <element signature="e#772#806#0" />
-                <element signature="e#808#839#0" />
-                <element signature="e#841#873#0" />
-                <element signature="e#875#909#0" />
-                <element signature="e#911#943#0" />
-                <element signature="e#945#983#0" />
-                <element signature="e#985#1028#0" />
-                <element signature="e#1030#1066#0" />
-                <element signature="e#1068#1105#0" />
-                <element signature="e#1107#1147#0" />
-                <element signature="e#1149#1187#0" />
-                <element signature="e#1189#1228#0" />
-                <element signature="e#1230#1268#0" />
-                <element signature="e#1270#1309#0" />
-                <element signature="e#1311#1347#0" />
-                <element signature="e#1349#1386#0" />
-                <element signature="n#!!block;n#Option#0" />
-                <element signature="e#1496#1578#0" />
-                <element signature="e#1580#1685#0" />
-                <element signature="e#1614#1644#0" />
-                <element signature="e#1687#1771#0" />
-                <element signature="e#1773#1881#0" />
-                <element signature="e#1808#1839#0" />
-                <element signature="e#1883#1967#0" />
-                <element signature="e#2002#2031#0" />
-                <element signature="e#2071#2162#0" />
-                <element signature="e#2106#2137#0" />
-                <element signature="e#2164#2207#0" />
-                <element signature="e#2209#2446#0" />
-                <element signature="e#2255#2355#0" />
-                <element signature="e#2448#2669#0" />
-                <element signature="e#2488#2524#0" />
-                <element signature="e#3360#3492#0" />
-                <element signature="e#3029#3169#0" />
-                <element signature="n#!!block;n#Query#0" />
-                <element signature="n#!!block;n#setup#0" />
-                <element signature="e#4029#4066#0" />
-                <element signature="n#!!block;n#usebuf#0" />
-                <element signature="e#4182#4220#0" />
-                <element signature="n#!!block;n#flush#0" />
-                <element signature="e#4280#4315#0" />
-                <element signature="n#!!block;n#closebuf#0" />
-                <element signature="n#!!block;n#Clear#0" />
-                <element signature="e#4439#4626#0" />
-                <element signature="e#4473#4623#0" />
+                <element signature="e#168#227#0" expanded="false" />
+                <element signature="e#243#574#0" expanded="false" />
+                <element signature="e#582#646#0" expanded="false" />
+                <element signature="n#!!block;n#NewSoftware#0" expanded="false" />
+                <element signature="e#828#1051#0" expanded="false" />
+                <element signature="e#877#1048#0" expanded="false" />
+                <element signature="e#908#944#0" expanded="false" />
+                <element signature="e#948#991#0" expanded="false" />
+                <element signature="e#995#1038#0" expanded="false" />
+                <element signature="n#!!block;n#Support#0" expanded="false" />
+                <element signature="e#1167#1212#0" expanded="false" />
+                <element signature="e#1188#1209#0" expanded="false" />
+                <element signature="n#!!block;n#support#0" expanded="false" />
+                <element signature="e#1324#1356#0" expanded="false" />
+                <element signature="e#1358#1391#0" expanded="false" />
+                <element signature="e#1393#1426#0" expanded="false" />
+                <element signature="e#1428#1462#0" expanded="false" />
+                <element signature="e#1464#1495#0" expanded="false" />
+                <element signature="e#1497#1529#0" expanded="false" />
+                <element signature="e#1531#1565#0" expanded="false" />
+                <element signature="e#1567#1599#0" expanded="false" />
+                <element signature="e#1601#1639#0" expanded="false" />
+                <element signature="e#1641#1684#0" expanded="false" />
+                <element signature="e#1686#1722#0" expanded="false" />
+                <element signature="e#1724#1761#0" expanded="false" />
+                <element signature="e#1763#1803#0" expanded="false" />
+                <element signature="e#1805#1843#0" expanded="false" />
+                <element signature="e#1845#1884#0" expanded="false" />
+                <element signature="e#1886#1924#0" expanded="false" />
+                <element signature="e#1926#1965#0" expanded="false" />
+                <element signature="e#1967#2003#0" expanded="false" />
+                <element signature="e#2005#2042#0" expanded="false" />
+                <element signature="n#!!block;n#Option#0" expanded="false" />
+                <element signature="e#2171#2253#0" expanded="false" />
+                <element signature="e#2255#2360#0" expanded="false" />
+                <element signature="e#2289#2319#0" expanded="false" />
+                <element signature="e#2362#2446#0" expanded="false" />
+                <element signature="e#2448#2556#0" expanded="false" />
+                <element signature="e#2483#2514#0" expanded="false" />
+                <element signature="e#2558#2642#0" expanded="false" />
+                <element signature="e#2644#2744#0" expanded="false" />
+                <element signature="e#2677#2706#0" expanded="false" />
+                <element signature="e#2746#2837#0" expanded="false" />
+                <element signature="e#2781#2812#0" expanded="false" />
+                <element signature="e#2839#2882#0" expanded="false" />
+                <element signature="e#2884#3121#0" expanded="false" />
+                <element signature="e#2930#3030#0" expanded="false" />
+                <element signature="e#3123#3344#0" expanded="false" />
+                <element signature="e#3163#3199#0" expanded="false" />
+                <element signature="e#3346#3403#0" expanded="false" />
+                <element signature="e#3405#3463#0" expanded="false" />
+                <element signature="e#3465#3538#0" expanded="false" />
+                <element signature="e#3540#3621#0" expanded="false" />
+                <element signature="e#3623#3705#0" expanded="false" />
+                <element signature="e#3707#4052#0" expanded="false" />
+                <element signature="e#3782#4047#0" expanded="false" />
+                <element signature="e#3880#3982#0" expanded="false" />
+                <element signature="e#3903#3970#0" expanded="false" />
+                <element signature="e#4054#4400#0" expanded="false" />
+                <element signature="e#4130#4395#0" expanded="false" />
+                <element signature="e#4228#4330#0" expanded="false" />
+                <element signature="e#4251#4318#0" expanded="false" />
+                <element signature="e#4402#4441#0" expanded="false" />
+                <element signature="e#4443#4483#0" expanded="false" />
+                <element signature="e#4485#4586#0" expanded="false" />
+                <element signature="e#4588#4717#0" expanded="false" />
+                <element signature="e#4629#4666#0" expanded="false" />
+                <element signature="n#!!block;n#Query#0" expanded="false" />
+                <element signature="e#4909#5049#0" expanded="false" />
+                <element signature="e#4973#5022#0" expanded="false" />
+                <element signature="e#5055#5095#0" expanded="false" />
+                <element signature="n#!!block;n#query#0" expanded="false" />
+                <element signature="e#5435#5805#0" expanded="false" />
+                <element signature="e#5493#5805#0" expanded="false" />
+                <element signature="e#5528#5801#0" expanded="false" />
+                <element signature="e#5591#5691#0" expanded="false" />
+                <element signature="e#5697#5796#0" expanded="false" />
+                <element signature="n#!!block;n#Clear#0" expanded="false" />
+                <element signature="e#6004#6239#0" expanded="false" />
+                <element signature="e#6023#6233#0" expanded="false" />
+                <element signature="e#6058#6216#0" expanded="false" />
+                <element signature="n#!!block;n#setup#0" expanded="false" />
+                <element signature="e#6440#6501#0" expanded="false" />
+                <element signature="n#!!block;n#intense#0" expanded="false" />
+                <element signature="n#!!block;n#mixRGBA32Over#0" expanded="false" />
+                <element signature="n#!!block;n#mixRGBA32Src#0" expanded="false" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="CLAA.go" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/claa/CLAA.go">
+      <file leaf-file-name="draw.go" pinned="false" current-in-tab="false">
+        <entry file="file://C:/Go/src/image/draw/draw.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="527">
-              <caret line="59" column="14" selection-start-line="59" selection-start-column="14" selection-end-line="59" selection-end-column="14" />
+            <state relative-caret-position="190">
+              <caret line="240" column="5" lean-forward="false" selection-start-line="240" selection-start-column="5" selection-end-line="240" selection-end-column="5" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Software_test.go" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/softcanvas/Software_test.go">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="152">
+              <caret line="18" column="5" lean-forward="false" selection-start-line="18" selection-start-column="5" selection-end-line="18" selection-end-column="5" />
               <folding>
-                <element signature="e#75#180#0" />
-                <element signature="e#261#300#0" />
-                <element signature="n#!!block;n#NewCLAA#0" />
-                <element signature="e#414#512#0" />
-                <element signature="n#!!block;n#Clear#0" />
-                <element signature="e#592#643#0" />
-                <element signature="e#647#722#0" />
-                <element signature="n#!!block;n#Data#0" />
-                <element signature="n#!!block;n#Result#0" />
-                <element signature="n#!!block;n#SyncResult#0" />
-                <element signature="n#!!block;n#effective#0" />
-                <element signature="n#!!block;n#toRange#0" />
+                <element signature="e#20#204#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Options.go" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/softcanvas/Options.go">
+      <file leaf-file-name="out.png" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/softcanvas/out.png">
+          <provider selected="true" editor-type-id="images">
+            <state />
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="testing.go" pinned="false" current-in-tab="false">
+        <entry file="file://C:/Go/src/testing/testing.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="153">
-              <caret line="12" column="51" selection-start-line="12" selection-start-column="51" selection-end-line="12" selection-end-column="51" />
+            <state relative-caret-position="198">
+              <caret line="789" column="0" lean-forward="false" selection-start-line="789" selection-start-column="0" selection-end-line="789" selection-end-column="0" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -119,33 +161,43 @@
       <file leaf-file-name="SurfaceOption.go" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/SurfaceOption.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="799">
-              <caret line="146" column="15" selection-start-line="146" selection-start-column="15" selection-end-line="146" selection-end-column="15" />
+            <state relative-caret-position="298">
+              <caret line="80" column="22" lean-forward="false" selection-start-line="80" selection-start-column="22" selection-end-line="80" selection-end-column="22" />
               <folding>
-                <element signature="e#117#155#0" />
-                <element signature="e#179#238#0" />
-                <element signature="e#473#1022#0" />
-                <element signature="e#482#505#0" />
-                <element signature="e#547#570#0" />
-                <element signature="e#645#708#0" />
-                <element signature="e#872#874#0" />
-                <element signature="e#1052#1532#0" />
-                <element signature="e#1060#1072#0" />
-                <element signature="e#1108#1121#0" />
-                <element signature="e#1158#1184#0" />
-                <element signature="e#1227#1244#0" />
-                <element signature="e#1276#1300#0" />
-                <element signature="e#1392#1410#0" />
-                <element signature="e#1460#1478#0" />
-                <element signature="n#!!block;n#OptionType#0" />
-                <element signature="n#!!block;n#OptionType#1" />
-                <element signature="n#!!block;n#OptionType#2" />
-                <element signature="n#!!block;n#OptionType#3" />
-                <element signature="n#!!block;n#OptionType#4" />
-                <element signature="n#!!block;n#OptionType#5" />
-                <element signature="n#!!block;n#OptionType#6" />
-                <element signature="e#1981#2051#0" />
+                <element signature="e#78#116#0" expanded="false" />
+                <element signature="e#434#766#0" expanded="false" />
+                <element signature="e#929#950#0" expanded="false" />
+                <element signature="n#!!block;n#OptionType#0" expanded="false" />
+                <element signature="n#!!block;n#Error#0" expanded="false" />
+                <element signature="n#!!block;n#IsFail#0" expanded="false" />
+                <element signature="e#1113#1131#0" expanded="false" />
+                <element signature="n#!!block;n#OptionType#1" expanded="false" />
+                <element signature="n#!!block;n#OptionType#2" expanded="false" />
+                <element signature="n#!!block;n#OptionType#3" expanded="false" />
+                <element signature="n#!!block;n#OptionType#4" expanded="false" />
+                <element signature="n#!!block;n#OptionType#5" expanded="false" />
+                <element signature="n#!!block;n#OptionType#6" expanded="false" />
+                <element signature="n#!!block;n#Convert#0" expanded="false" />
+                <element signature="e#2118#2177#0" expanded="false" />
+                <element signature="n#!!block;n#OptionType#7" expanded="false" />
+                <element signature="e#2257#2327#0" expanded="false" />
+                <element signature="e#2354#2707#0" expanded="false" />
+                <element signature="n#!!block;n#OptionType#8" expanded="false" />
+                <element signature="n#!!block;n#OptionType#9" expanded="false" />
+                <element signature="n#!!block;n#OptionType#10" expanded="false" />
+                <element signature="n#!!block;n#OptionType#11" expanded="false" />
+                <element signature="n#!!block;n#OptionType#12" expanded="false" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Surface.go" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Surface.go">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="76">
+              <caret line="4" column="4" lean-forward="false" selection-start-line="4" selection-start-column="4" selection-end-line="4" selection-end-column="4" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -165,7 +217,6 @@
       <find>s.Data</find>
       <find>4</find>
       <find>}</find>
-      <find>fmt</find>
       <find>const unsigned short</find>
       <find>=</find>
       <find>PATHSEG_</find>
@@ -175,6 +226,8 @@
       <find>close</find>
       <find>-27.142</find>
       <find>return true</find>
+      <find>MixOperation</find>
+      <find>fmt</find>
     </findStrings>
     <replaceStrings>
       <replace>s.to.Data</replace>
@@ -199,7 +252,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/Shader.go" />
         <option value="$PROJECT_DIR$/Transform_test.go" />
         <option value="$PROJECT_DIR$/optimize_test.go" />
         <option value="$PROJECT_DIR$/optimizeno.s" />
@@ -208,7 +260,6 @@
         <option value="$PROJECT_DIR$/FillInnerPath.go" />
         <option value="$PROJECT_DIR$/example/raster.go" />
         <option value="$PROJECT_DIR$/Software_test.go" />
-        <option value="$PROJECT_DIR$/util_Capture.go" />
         <option value="$PROJECT_DIR$/math.go" />
         <option value="$PROJECT_DIR$/cl aa.go" />
         <option value="$PROJECT_DIR$/Legacy.go" />
@@ -238,16 +289,19 @@
         <option value="$PROJECT_DIR$/Path.go" />
         <option value="$PROJECT_DIR$/Path_Fill.go" />
         <option value="$PROJECT_DIR$/claa/CLAA_test.go" />
-        <option value="$PROJECT_DIR$/claa/ClaaFn.go" />
         <option value="$PROJECT_DIR$/Software.go" />
         <option value="$PROJECT_DIR$/Errors.go" />
         <option value="$PROJECT_DIR$/SurfaceTypes.go" />
-        <option value="$PROJECT_DIR$/Surface.go" />
         <option value="$PROJECT_DIR$/softcanvas/Options.go" />
         <option value="$PROJECT_DIR$/softcanvas/init.go" />
         <option value="$PROJECT_DIR$/CanvasManager.go" />
-        <option value="$PROJECT_DIR$/SurfaceOption.go" />
+        <option value="$PROJECT_DIR$/Surface.go" />
+        <option value="$PROJECT_DIR$/claa/ClaaFn.go" />
         <option value="$PROJECT_DIR$/claa/CLAA.go" />
+        <option value="$PROJECT_DIR$/util_Capture.go" />
+        <option value="$PROJECT_DIR$/SurfaceOption.go" />
+        <option value="$PROJECT_DIR$/util_Clear.go" />
+        <option value="$PROJECT_DIR$/softcanvas/Software_test.go" />
         <option value="$PROJECT_DIR$/softcanvas/Software.go" />
       </list>
     </option>
@@ -267,10 +321,21 @@
     <option name="height" value="1047" />
   </component>
   <component name="ProjectView">
-    <navigator proportions="" version="1">
+    <navigator currentView="ProjectPane" proportions="" version="1">
+      <flattenPackages />
+      <showMembers />
+      <showModules />
+      <showLibraryContents />
+      <hideEmptyPackages />
+      <abbreviatePackageNames />
+      <autoscrollToSource />
+      <autoscrollFromSource />
+      <sortByType />
+      <manualOrder />
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -281,18 +346,13 @@
             <path>
               <item name="canvas" type="b2602c69:ProjectViewProjectNode" />
               <item name="canvas" type="462c0819:PsiDirectoryNode" />
-              <item name="claa" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="canvas" type="b2602c69:ProjectViewProjectNode" />
-              <item name="canvas" type="462c0819:PsiDirectoryNode" />
               <item name="softcanvas" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
+      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -330,7 +390,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Go Test.CLAA_test.go">
+  <component name="RunManager" selected="Go Test.Software_test.go">
     <configuration default="true" type="GoApplicationRunConfiguration" factoryName="Go Application">
       <module name="canvas" />
       <working_directory value="$PROJECT_DIR$/" />
@@ -367,6 +427,15 @@
       <directory value="$PROJECT_DIR$/" />
       <filePath value="$PROJECT_DIR$/claa/CLAA_test.go" />
     </configuration>
+    <configuration name="Software_test.go" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true">
+      <module name="canvas" />
+      <working_directory value="$PROJECT_DIR$/softcanvas" />
+      <go_parameters value="-i" />
+      <framework value="gotest" />
+      <kind value="FILE" />
+      <directory value="$PROJECT_DIR$/" />
+      <filePath value="$PROJECT_DIR$/softcanvas/Software_test.go" />
+    </configuration>
     <configuration name="TestCLAA in github.com/iamGreedy/canvas/claa" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true">
       <module name="canvas" />
       <working_directory value="$PROJECT_DIR$/claa" />
@@ -387,87 +456,81 @@
       <directory value="$PROJECT_DIR$/" />
       <filePath value="$PROJECT_DIR$/" />
     </configuration>
-    <configuration name="gobench CLAA_test.go" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true">
-      <module name="canvas" />
-      <working_directory value="$PROJECT_DIR$/claa" />
-      <go_parameters value="-i" />
-      <framework value="gobench" />
-      <kind value="FILE" />
-      <directory value="$PROJECT_DIR$/" />
-      <filePath value="$PROJECT_DIR$/claa/CLAA_test.go" />
-    </configuration>
-    <list>
-      <item itemvalue="Go Build.go build simple.go" />
-      <item itemvalue="Go Test.gobench CLAA_test.go" />
-      <item itemvalue="Go Test.TestCLAA in github.com/iamGreedy/canvas/claa" />
-      <item itemvalue="Go Test.BenchmarkCLAASyncGoRoutine in github.com/iamGreedy/canvas/claa" />
-      <item itemvalue="Go Test.CLAA_test.go" />
+    <list size="5">
+      <item index="0" class="java.lang.String" itemvalue="Go Build.go build simple.go" />
+      <item index="1" class="java.lang.String" itemvalue="Go Test.TestCLAA in github.com/iamGreedy/canvas/claa" />
+      <item index="2" class="java.lang.String" itemvalue="Go Test.BenchmarkCLAASyncGoRoutine in github.com/iamGreedy/canvas/claa" />
+      <item index="3" class="java.lang.String" itemvalue="Go Test.CLAA_test.go" />
+      <item index="4" class="java.lang.String" itemvalue="Go Test.Software_test.go" />
     </list>
     <recent_temporary>
-      <list>
-        <item itemvalue="Go Test.CLAA_test.go" />
-        <item itemvalue="Go Test.TestCLAA in github.com/iamGreedy/canvas/claa" />
-        <item itemvalue="Go Build.go build simple.go" />
-        <item itemvalue="Go Test.BenchmarkCLAASyncGoRoutine in github.com/iamGreedy/canvas/claa" />
-        <item itemvalue="Go Test.gobench CLAA_test.go" />
+      <list size="5">
+        <item index="0" class="java.lang.String" itemvalue="Go Test.Software_test.go" />
+        <item index="1" class="java.lang.String" itemvalue="Go Test.CLAA_test.go" />
+        <item index="2" class="java.lang.String" itemvalue="Go Test.TestCLAA in github.com/iamGreedy/canvas/claa" />
+        <item index="3" class="java.lang.String" itemvalue="Go Build.go build simple.go" />
+        <item index="4" class="java.lang.String" itemvalue="Go Test.BenchmarkCLAASyncGoRoutine in github.com/iamGreedy/canvas/claa" />
       </list>
     </recent_temporary>
   </component>
+  <component name="ShelveChangesManager" show_recycled="false">
+    <option name="remove_strategy" value="false" />
+  </component>
   <component name="TestHistory">
-    <history-entry file="TestCLAA_in_github_com_iamGreedy_canvas_claa - 2018.07.16 at 21h 38m 39s.xml">
-      <configuration name="TestCLAA in github.com/iamGreedy/canvas/claa" configurationId="GoTestRunConfiguration" />
+    <history-entry file="Software_test_go - 2018.07.23 at 15h 40m 23s.xml">
+      <configuration name="Software_test.go" configurationId="GoTestRunConfiguration" />
     </history-entry>
-    <history-entry file="TestCLAA_in_github_com_iamGreedy_canvas_claa - 2018.07.16 at 21h 38m 43s.xml">
-      <configuration name="TestCLAA in github.com/iamGreedy/canvas/claa" configurationId="GoTestRunConfiguration" />
+    <history-entry file="Software_test_go - 2018.07.23 at 15h 45m 43s.xml">
+      <configuration name="Software_test.go" configurationId="GoTestRunConfiguration" />
     </history-entry>
-    <history-entry file="TestCLAA_in_github_com_iamGreedy_canvas_claa - 2018.07.16 at 21h 38m 46s.xml">
-      <configuration name="TestCLAA in github.com/iamGreedy/canvas/claa" configurationId="GoTestRunConfiguration" />
+    <history-entry file="Software_test_go - 2018.07.23 at 15h 45m 48s.xml">
+      <configuration name="Software_test.go" configurationId="GoTestRunConfiguration" />
     </history-entry>
-    <history-entry file="TestCLAA_in_github_com_iamGreedy_canvas_claa - 2018.07.16 at 21h 38m 54s.xml">
-      <configuration name="TestCLAA in github.com/iamGreedy/canvas/claa" configurationId="GoTestRunConfiguration" />
+    <history-entry file="Software_test_go - 2018.07.23 at 16h 25m 25s.xml">
+      <configuration name="Software_test.go" configurationId="GoTestRunConfiguration" />
     </history-entry>
-    <history-entry file="TestCLAA_in_github_com_iamGreedy_canvas_claa - 2018.07.16 at 21h 38m 59s.xml">
-      <configuration name="TestCLAA in github.com/iamGreedy/canvas/claa" configurationId="GoTestRunConfiguration" />
+    <history-entry file="Software_test_go - 2018.07.23 at 16h 25m 40s.xml">
+      <configuration name="Software_test.go" configurationId="GoTestRunConfiguration" />
     </history-entry>
-    <history-entry file="TestCLAA_in_github_com_iamGreedy_canvas_claa - 2018.07.16 at 21h 39m 04s.xml">
-      <configuration name="TestCLAA in github.com/iamGreedy/canvas/claa" configurationId="GoTestRunConfiguration" />
+    <history-entry file="Software_test_go - 2018.07.23 at 16h 25m 59s.xml">
+      <configuration name="Software_test.go" configurationId="GoTestRunConfiguration" />
     </history-entry>
-    <history-entry file="TestCLAA_in_github_com_iamGreedy_canvas_claa - 2018.07.16 at 21h 39m 08s.xml">
-      <configuration name="TestCLAA in github.com/iamGreedy/canvas/claa" configurationId="GoTestRunConfiguration" />
+    <history-entry file="Software_test_go - 2018.07.23 at 16h 26m 27s.xml">
+      <configuration name="Software_test.go" configurationId="GoTestRunConfiguration" />
     </history-entry>
-    <history-entry file="TestCLAA_in_github_com_iamGreedy_canvas_claa - 2018.07.16 at 21h 39m 17s.xml">
-      <configuration name="TestCLAA in github.com/iamGreedy/canvas/claa" configurationId="GoTestRunConfiguration" />
+    <history-entry file="Software_test_go - 2018.07.23 at 16h 26m 49s.xml">
+      <configuration name="Software_test.go" configurationId="GoTestRunConfiguration" />
     </history-entry>
-    <history-entry file="CLAA_test_go - 2018.07.16 at 21h 48m 40s.xml">
-      <configuration name="CLAA_test.go" configurationId="GoTestRunConfiguration" />
+    <history-entry file="Software_test_go - 2018.07.23 at 16h 29m 56s.xml">
+      <configuration name="Software_test.go" configurationId="GoTestRunConfiguration" />
     </history-entry>
-    <history-entry file="CLAA_test_go - 2018.07.16 at 21h 57m 00s.xml">
-      <configuration name="CLAA_test.go" configurationId="GoTestRunConfiguration" />
+    <history-entry file="Software_test_go - 2018.07.23 at 16h 30m 46s.xml">
+      <configuration name="Software_test.go" configurationId="GoTestRunConfiguration" />
     </history-entry>
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="1" visible="true" weight="0.15405117" />
-      <window_info anchor="bottom" id="TODO" order="11" />
-      <window_info anchor="bottom" id="Statistic" order="1" />
-      <window_info anchor="bottom" id="Event Log" order="3" sideWeight="0.5010661" side_tool="true" weight="0.33369684" />
-      <window_info anchor="right" id="Database" order="0" />
-      <window_info anchor="bottom" id="Database Changes" order="0" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Version Control" order="4" />
-      <window_info anchor="bottom" id="Run" order="7" sideWeight="0.4989339" weight="0.45583424" />
-      <window_info id="Structure" order="2" side_tool="true" weight="0.25" />
-      <window_info anchor="bottom" id="Terminal" order="2" weight="0.32061067" />
-      <window_info id="Favorites" order="0" side_tool="true" />
-      <window_info anchor="bottom" id="Debug" order="8" weight="0.37254903" />
-      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="3" weight="0.25" />
-      <window_info anchor="bottom" id="Inspection" order="10" weight="0.4" />
-      <window_info anchor="right" id="Commander" order="1" weight="0.4" />
-      <window_info anchor="right" id="Ant Build" order="2" weight="0.25" />
-      <window_info anchor="bottom" id="Message" order="5" />
-      <window_info anchor="bottom" id="Cvs" order="9" weight="0.25" />
-      <window_info anchor="bottom" id="Find" order="6" weight="0.32826087" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.15565032" sideWeight="0.5" order="1" side_tool="false" content_ui="combo" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
+      <window_info id="Statistic" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33369684" sideWeight="0.5010661" order="3" side_tool="true" content_ui="tabs" />
+      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32608697" sideWeight="0.4989339" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32061067" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="true" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.37254903" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Database Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="3" side_tool="false" content_ui="combo" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32826087" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -550,25 +613,20 @@
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/example/CW.png" />
-    <entry file="file://$PROJECT_DIR$/example/Arc.png" />
-    <entry file="file://$PROJECT_DIR$/example/CCW.png" />
-    <entry file="file://$PROJECT_DIR$/example/out.png" />
-    <entry file="file://$PROJECT_DIR$/../../golang/freetype/raster/raster.go" />
     <entry file="file://$PROJECT_DIR$/example/Intersect.png" />
     <entry file="file://$PROJECT_DIR$/Legacy.go" />
     <entry file="file://$PROJECT_DIR$/../../../golang.org/x/image/math/fixed/fixed.go" />
     <entry file="file://C:/Go/src/runtime/asm_amd64.s">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="178">
-          <caret line="2360" selection-start-line="2360" selection-end-line="2360" />
+          <caret line="2360" column="0" lean-forward="false" selection-start-line="2360" selection-start-column="0" selection-end-line="2360" selection-end-column="0" />
         </state>
       </provider>
     </entry>
     <entry file="file://C:/Go/src/sort/sort.go">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="162">
-          <caret line="215" column="5" selection-start-line="215" selection-start-column="5" selection-end-line="215" selection-end-column="5" />
+          <caret line="215" column="5" lean-forward="false" selection-start-line="215" selection-start-column="5" selection-end-line="215" selection-end-column="5" />
         </state>
       </provider>
     </entry>
@@ -576,14 +634,7 @@
     <entry file="file://C:/Go/src/image/image.go">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-1241">
-          <caret line="481" column="5" selection-start-line="481" selection-start-column="5" selection-end-line="481" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://C:/Go/src/testing/testing.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="152">
-          <caret line="741" selection-start-line="741" selection-end-line="741" />
+          <caret line="481" column="5" lean-forward="false" selection-start-line="481" selection-start-column="5" selection-end-line="481" selection-end-column="5" />
         </state>
       </provider>
     </entry>
@@ -596,7 +647,7 @@
     <entry file="file://C:/Go/src/runtime/proc.go">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="833">
-          <caret line="150" selection-start-line="150" selection-end-line="150" />
+          <caret line="150" column="0" lean-forward="false" selection-start-line="150" selection-start-column="0" selection-end-line="150" selection-end-column="0" />
         </state>
       </provider>
     </entry>
@@ -604,7 +655,7 @@
     <entry file="file://$PROJECT_DIR$/../../go-gl/mathgl/mgl32/matrix.go">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="347">
-          <caret line="23" column="23" selection-start-line="23" selection-start-column="23" selection-end-line="23" selection-end-column="23" />
+          <caret line="23" column="23" lean-forward="false" selection-start-line="23" selection-start-column="23" selection-end-line="23" selection-end-column="23" />
         </state>
       </provider>
     </entry>
@@ -612,54 +663,27 @@
     <entry file="file://$PROJECT_DIR$/psvg/Interfaces.go" />
     <entry file="file://$PROJECT_DIR$/psvg/define.go" />
     <entry file="file://$PROJECT_DIR$/psvg/PSVG.go" />
-    <entry file="file://C:/Go/src/runtime/panic.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="833">
-          <caret line="587" selection-start-line="587" selection-end-line="587" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/example/simple.go" />
     <entry file="file://$PROJECT_DIR$/util_sortedfloatlist.go" />
     <entry file="file://$PROJECT_DIR$/Legacy_test.go" />
     <entry file="file://$PROJECT_DIR$/Path.go">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="187">
-          <caret line="39" selection-start-line="39" selection-end-line="39" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/claa/CLAA_test.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="358">
-          <caret line="34" column="23" lean-forward="true" selection-start-line="34" selection-start-column="23" selection-end-line="34" selection-end-column="23" />
-          <folding>
-            <element signature="n#!!block;n#BenchmarkAlignGrid#0" />
-            <element signature="n#!!block;n#BenchmarkCLAARAW#0" />
-            <element signature="n#!!block;n#BenchmarkCLAAALIGNED#0" />
-            <element signature="n#!!block;n#BenchmarkCLAASyncGoRoutine#0" />
-          </folding>
+          <caret line="39" column="0" lean-forward="false" selection-start-line="39" selection-start-column="0" selection-end-line="39" selection-end-column="0" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Path_Fill.go">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="272">
-          <caret line="69" column="71" selection-start-line="69" selection-start-column="71" selection-end-line="69" selection-end-column="71" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/claa/ClaaFn.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="595">
-          <caret line="74" column="45" selection-start-line="74" selection-start-column="45" selection-end-line="74" selection-end-column="45" />
+          <caret line="69" column="71" lean-forward="false" selection-start-line="69" selection-start-column="71" selection-end-line="69" selection-end-column="71" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Transform.go">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="17">
-          <caret line="4" column="38" selection-start-line="4" selection-start-column="38" selection-end-line="4" selection-end-column="38" />
+          <caret line="4" column="38" lean-forward="false" selection-start-line="4" selection-start-column="38" selection-end-line="4" selection-end-column="38" />
         </state>
       </provider>
     </entry>
@@ -670,31 +694,24 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/util_Capture.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="15" column="40" selection-start-line="15" selection-start-column="40" selection-end-line="15" selection-end-column="40" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/util_floatzeromul.go">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="51">
-          <caret line="5" lean-forward="true" selection-start-line="5" selection-end-line="5" />
+          <caret line="5" column="0" lean-forward="true" selection-start-line="5" selection-start-column="0" selection-end-line="5" selection-end-column="0" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Font.go">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="95">
-          <caret line="5" selection-start-line="5" selection-end-line="5" />
+          <caret line="5" column="0" lean-forward="false" selection-start-line="5" selection-start-column="0" selection-end-line="5" selection-end-column="0" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Errors.go">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="152">
-          <caret line="8" column="20" selection-start-line="8" selection-start-column="4" selection-end-line="8" selection-end-column="20" />
+          <caret line="8" column="20" lean-forward="false" selection-start-line="8" selection-start-column="4" selection-end-line="8" selection-end-column="20" />
         </state>
       </provider>
     </entry>
@@ -702,166 +719,284 @@
     <entry file="file://$PROJECT_DIR$/softcanvas/init.go">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="133">
-          <caret line="7" column="17" selection-start-line="7" selection-start-column="17" selection-end-line="7" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/.gitignore">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/CanvasManager.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="152">
-          <caret line="16" column="29" selection-start-line="16" selection-start-column="29" selection-end-line="16" selection-end-column="29" />
-          <folding>
-            <element signature="n#!!block;n#Setup#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Surface.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-42">
-          <caret line="7" column="24" selection-start-line="7" selection-start-column="24" selection-end-line="7" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/SurfaceOption.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="799">
-          <caret line="146" column="15" selection-start-line="146" selection-start-column="15" selection-end-line="146" selection-end-column="15" />
-          <folding>
-            <element signature="e#117#155#0" />
-            <element signature="e#179#238#0" />
-            <element signature="e#473#1022#0" />
-            <element signature="e#482#505#0" />
-            <element signature="e#547#570#0" />
-            <element signature="e#645#708#0" />
-            <element signature="e#872#874#0" />
-            <element signature="e#1052#1532#0" />
-            <element signature="e#1060#1072#0" />
-            <element signature="e#1108#1121#0" />
-            <element signature="e#1158#1184#0" />
-            <element signature="e#1227#1244#0" />
-            <element signature="e#1276#1300#0" />
-            <element signature="e#1392#1410#0" />
-            <element signature="e#1460#1478#0" />
-            <element signature="n#!!block;n#OptionType#0" />
-            <element signature="n#!!block;n#OptionType#1" />
-            <element signature="n#!!block;n#OptionType#2" />
-            <element signature="n#!!block;n#OptionType#3" />
-            <element signature="n#!!block;n#OptionType#4" />
-            <element signature="n#!!block;n#OptionType#5" />
-            <element signature="n#!!block;n#OptionType#6" />
-            <element signature="e#1981#2051#0" />
-          </folding>
+          <caret line="7" column="17" lean-forward="false" selection-start-line="7" selection-start-column="17" selection-end-line="7" selection-end-column="17" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/softcanvas/Options.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="12" column="51" selection-start-line="12" selection-start-column="51" selection-end-line="12" selection-end-column="51" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/claa/CLAA.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="527">
-          <caret line="59" column="14" selection-start-line="59" selection-start-column="14" selection-end-line="59" selection-end-column="14" />
-          <folding>
-            <element signature="e#75#180#0" />
-            <element signature="e#261#300#0" />
-            <element signature="n#!!block;n#NewCLAA#0" />
-            <element signature="e#414#512#0" />
-            <element signature="n#!!block;n#Clear#0" />
-            <element signature="e#592#643#0" />
-            <element signature="e#647#722#0" />
-            <element signature="n#!!block;n#Data#0" />
-            <element signature="n#!!block;n#Result#0" />
-            <element signature="n#!!block;n#SyncResult#0" />
-            <element signature="n#!!block;n#effective#0" />
-            <element signature="n#!!block;n#toRange#0" />
-          </folding>
+        <state relative-caret-position="171">
+          <caret line="12" column="51" lean-forward="false" selection-start-line="12" selection-start-column="51" selection-end-line="12" selection-end-column="51" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://C:/Go/src/sync/cond.go">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1530">
-          <caret line="93" column="5" selection-start-line="93" selection-start-column="5" selection-end-line="93" selection-end-column="5" />
+          <caret line="93" column="5" lean-forward="false" selection-start-line="93" selection-start-column="5" selection-end-line="93" selection-end-column="5" />
         </state>
       </provider>
     </entry>
     <entry file="file://C:/Go/src/sync/pool.go">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="314">
-          <caret line="44" column="14" selection-start-line="44" selection-start-column="14" selection-end-line="44" selection-end-column="14" />
+          <caret line="44" column="14" lean-forward="false" selection-start-line="44" selection-start-column="14" selection-end-line="44" selection-end-column="14" />
         </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CanvasManager.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="171">
+          <caret line="17" column="53" lean-forward="true" selection-start-line="17" selection-start-column="53" selection-end-line="17" selection-end-column="53" />
+          <folding>
+            <element signature="n#!!block;n#Setup#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://C:/Go/src/runtime/panic.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="198">
+          <caret line="490" column="0" lean-forward="false" selection-start-line="490" selection-start-column="0" selection-end-line="490" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/claa/CLAA_test.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="817">
+          <caret line="155" column="131" lean-forward="false" selection-start-line="145" selection-start-column="59" selection-end-line="155" selection-end-column="131" />
+          <folding>
+            <element signature="n#!!block;n#BenchmarkAlignGrid#0" expanded="false" />
+            <element signature="n#!!block;n#BenchmarkCLAARAW#0" expanded="false" />
+            <element signature="n#!!block;n#BenchmarkCLAAALIGNED#0" expanded="false" />
+            <element signature="n#!!block;n#BenchmarkCLAASyncGoRoutine#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/claa/ClaaFn.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="570">
+          <caret line="73" column="1" lean-forward="false" selection-start-line="73" selection-start-column="1" selection-end-line="73" selection-end-column="1" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/claa/CLAA.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="114">
+          <caret line="6" column="0" lean-forward="false" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
+          <folding>
+            <element signature="e#75#180#0" expanded="false" />
+            <element signature="e#261#300#0" expanded="false" />
+            <element signature="n#!!block;n#NewCLAA#0" expanded="false" />
+            <element signature="e#414#512#0" expanded="false" />
+            <element signature="n#!!block;n#Clear#0" expanded="false" />
+            <element signature="e#592#643#0" expanded="false" />
+            <element signature="e#647#722#0" expanded="false" />
+            <element signature="n#!!block;n#Data#0" expanded="false" />
+            <element signature="n#!!block;n#SyncResult#0" expanded="false" />
+            <element signature="n#!!block;n#effective#0" expanded="false" />
+            <element signature="n#!!block;n#toRange#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/claa/test.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://C:/Go/src/image/color/color.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="298">
+          <caret line="25" column="5" lean-forward="false" selection-start-line="25" selection-start-column="5" selection-end-line="25" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/util_Capture.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="418">
+          <caret line="22" column="8" lean-forward="true" selection-start-line="22" selection-start-column="8" selection-end-line="22" selection-end-column="8" />
+          <folding>
+            <element signature="e#16#70#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Surface.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="76">
+          <caret line="4" column="4" lean-forward="false" selection-start-line="4" selection-start-column="4" selection-end-line="4" selection-end-column="4" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/util_Clear.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="76">
+          <caret line="4" column="0" lean-forward="false" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://C:/Go/src/testing/testing.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="198">
+          <caret line="789" column="0" lean-forward="false" selection-start-line="789" selection-start-column="0" selection-end-line="789" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/SurfaceOption.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="298">
+          <caret line="80" column="22" lean-forward="false" selection-start-line="80" selection-start-column="22" selection-end-line="80" selection-end-column="22" />
+          <folding>
+            <element signature="e#78#116#0" expanded="false" />
+            <element signature="e#434#766#0" expanded="false" />
+            <element signature="e#929#950#0" expanded="false" />
+            <element signature="n#!!block;n#OptionType#0" expanded="false" />
+            <element signature="n#!!block;n#Error#0" expanded="false" />
+            <element signature="n#!!block;n#IsFail#0" expanded="false" />
+            <element signature="e#1113#1131#0" expanded="false" />
+            <element signature="n#!!block;n#OptionType#1" expanded="false" />
+            <element signature="n#!!block;n#OptionType#2" expanded="false" />
+            <element signature="n#!!block;n#OptionType#3" expanded="false" />
+            <element signature="n#!!block;n#OptionType#4" expanded="false" />
+            <element signature="n#!!block;n#OptionType#5" expanded="false" />
+            <element signature="n#!!block;n#OptionType#6" expanded="false" />
+            <element signature="n#!!block;n#Convert#0" expanded="false" />
+            <element signature="e#2118#2177#0" expanded="false" />
+            <element signature="n#!!block;n#OptionType#7" expanded="false" />
+            <element signature="e#2257#2327#0" expanded="false" />
+            <element signature="e#2354#2707#0" expanded="false" />
+            <element signature="n#!!block;n#OptionType#8" expanded="false" />
+            <element signature="n#!!block;n#OptionType#9" expanded="false" />
+            <element signature="n#!!block;n#OptionType#10" expanded="false" />
+            <element signature="n#!!block;n#OptionType#11" expanded="false" />
+            <element signature="n#!!block;n#OptionType#12" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://C:/Go/src/image/draw/draw.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="190">
+          <caret line="240" column="5" lean-forward="false" selection-start-line="240" selection-start-column="5" selection-end-line="240" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/softcanvas/out.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/softcanvas/Software.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="459">
-          <caret line="42" column="34" selection-start-line="42" selection-start-column="34" selection-end-line="42" selection-end-column="34" />
+        <state relative-caret-position="406">
+          <caret line="273" column="3" lean-forward="true" selection-start-line="273" selection-start-column="3" selection-end-line="273" selection-end-column="13" />
           <folding>
-            <element signature="e#137#196#0" />
-            <element signature="e#718#889#0" />
-            <element signature="e#749#785#0" />
-            <element signature="e#789#832#0" />
-            <element signature="e#836#879#0" />
-            <element signature="n#!!block;n#Support#0" />
-            <element signature="e#532#577#0" />
-            <element signature="e#553#574#0" />
-            <element signature="n#!!block;n#support#0" />
-            <element signature="e#668#700#0" />
-            <element signature="e#702#735#0" />
-            <element signature="e#737#770#0" />
-            <element signature="e#772#806#0" />
-            <element signature="e#808#839#0" />
-            <element signature="e#841#873#0" />
-            <element signature="e#875#909#0" />
-            <element signature="e#911#943#0" />
-            <element signature="e#945#983#0" />
-            <element signature="e#985#1028#0" />
-            <element signature="e#1030#1066#0" />
-            <element signature="e#1068#1105#0" />
-            <element signature="e#1107#1147#0" />
-            <element signature="e#1149#1187#0" />
-            <element signature="e#1189#1228#0" />
-            <element signature="e#1230#1268#0" />
-            <element signature="e#1270#1309#0" />
-            <element signature="e#1311#1347#0" />
-            <element signature="e#1349#1386#0" />
-            <element signature="n#!!block;n#Option#0" />
-            <element signature="e#1496#1578#0" />
-            <element signature="e#1580#1685#0" />
-            <element signature="e#1614#1644#0" />
-            <element signature="e#1687#1771#0" />
-            <element signature="e#1773#1881#0" />
-            <element signature="e#1808#1839#0" />
-            <element signature="e#1883#1967#0" />
-            <element signature="e#2002#2031#0" />
-            <element signature="e#2071#2162#0" />
-            <element signature="e#2106#2137#0" />
-            <element signature="e#2164#2207#0" />
-            <element signature="e#2209#2446#0" />
-            <element signature="e#2255#2355#0" />
-            <element signature="e#2448#2669#0" />
-            <element signature="e#2488#2524#0" />
-            <element signature="e#3360#3492#0" />
-            <element signature="e#3029#3169#0" />
-            <element signature="n#!!block;n#Query#0" />
-            <element signature="n#!!block;n#setup#0" />
-            <element signature="e#4029#4066#0" />
-            <element signature="n#!!block;n#usebuf#0" />
-            <element signature="e#4182#4220#0" />
-            <element signature="n#!!block;n#flush#0" />
-            <element signature="e#4280#4315#0" />
-            <element signature="n#!!block;n#closebuf#0" />
-            <element signature="n#!!block;n#Clear#0" />
-            <element signature="e#4439#4626#0" />
-            <element signature="e#4473#4623#0" />
+            <element signature="e#168#227#0" expanded="false" />
+            <element signature="e#243#574#0" expanded="false" />
+            <element signature="e#582#646#0" expanded="false" />
+            <element signature="n#!!block;n#NewSoftware#0" expanded="false" />
+            <element signature="e#828#1051#0" expanded="false" />
+            <element signature="e#877#1048#0" expanded="false" />
+            <element signature="e#908#944#0" expanded="false" />
+            <element signature="e#948#991#0" expanded="false" />
+            <element signature="e#995#1038#0" expanded="false" />
+            <element signature="n#!!block;n#Support#0" expanded="false" />
+            <element signature="e#1167#1212#0" expanded="false" />
+            <element signature="e#1188#1209#0" expanded="false" />
+            <element signature="n#!!block;n#support#0" expanded="false" />
+            <element signature="e#1324#1356#0" expanded="false" />
+            <element signature="e#1358#1391#0" expanded="false" />
+            <element signature="e#1393#1426#0" expanded="false" />
+            <element signature="e#1428#1462#0" expanded="false" />
+            <element signature="e#1464#1495#0" expanded="false" />
+            <element signature="e#1497#1529#0" expanded="false" />
+            <element signature="e#1531#1565#0" expanded="false" />
+            <element signature="e#1567#1599#0" expanded="false" />
+            <element signature="e#1601#1639#0" expanded="false" />
+            <element signature="e#1641#1684#0" expanded="false" />
+            <element signature="e#1686#1722#0" expanded="false" />
+            <element signature="e#1724#1761#0" expanded="false" />
+            <element signature="e#1763#1803#0" expanded="false" />
+            <element signature="e#1805#1843#0" expanded="false" />
+            <element signature="e#1845#1884#0" expanded="false" />
+            <element signature="e#1886#1924#0" expanded="false" />
+            <element signature="e#1926#1965#0" expanded="false" />
+            <element signature="e#1967#2003#0" expanded="false" />
+            <element signature="e#2005#2042#0" expanded="false" />
+            <element signature="n#!!block;n#Option#0" expanded="false" />
+            <element signature="e#2171#2253#0" expanded="false" />
+            <element signature="e#2255#2360#0" expanded="false" />
+            <element signature="e#2289#2319#0" expanded="false" />
+            <element signature="e#2362#2446#0" expanded="false" />
+            <element signature="e#2448#2556#0" expanded="false" />
+            <element signature="e#2483#2514#0" expanded="false" />
+            <element signature="e#2558#2642#0" expanded="false" />
+            <element signature="e#2644#2744#0" expanded="false" />
+            <element signature="e#2677#2706#0" expanded="false" />
+            <element signature="e#2746#2837#0" expanded="false" />
+            <element signature="e#2781#2812#0" expanded="false" />
+            <element signature="e#2839#2882#0" expanded="false" />
+            <element signature="e#2884#3121#0" expanded="false" />
+            <element signature="e#2930#3030#0" expanded="false" />
+            <element signature="e#3123#3344#0" expanded="false" />
+            <element signature="e#3163#3199#0" expanded="false" />
+            <element signature="e#3346#3403#0" expanded="false" />
+            <element signature="e#3405#3463#0" expanded="false" />
+            <element signature="e#3465#3538#0" expanded="false" />
+            <element signature="e#3540#3621#0" expanded="false" />
+            <element signature="e#3623#3705#0" expanded="false" />
+            <element signature="e#3707#4052#0" expanded="false" />
+            <element signature="e#3782#4047#0" expanded="false" />
+            <element signature="e#3880#3982#0" expanded="false" />
+            <element signature="e#3903#3970#0" expanded="false" />
+            <element signature="e#4054#4400#0" expanded="false" />
+            <element signature="e#4130#4395#0" expanded="false" />
+            <element signature="e#4228#4330#0" expanded="false" />
+            <element signature="e#4251#4318#0" expanded="false" />
+            <element signature="e#4402#4441#0" expanded="false" />
+            <element signature="e#4443#4483#0" expanded="false" />
+            <element signature="e#4485#4586#0" expanded="false" />
+            <element signature="e#4588#4717#0" expanded="false" />
+            <element signature="e#4629#4666#0" expanded="false" />
+            <element signature="n#!!block;n#Query#0" expanded="false" />
+            <element signature="e#4909#5049#0" expanded="false" />
+            <element signature="e#4973#5022#0" expanded="false" />
+            <element signature="e#5055#5095#0" expanded="false" />
+            <element signature="n#!!block;n#query#0" expanded="false" />
+            <element signature="e#5435#5805#0" expanded="false" />
+            <element signature="e#5493#5805#0" expanded="false" />
+            <element signature="e#5528#5801#0" expanded="false" />
+            <element signature="e#5591#5691#0" expanded="false" />
+            <element signature="e#5697#5796#0" expanded="false" />
+            <element signature="n#!!block;n#Clear#0" expanded="false" />
+            <element signature="e#6004#6239#0" expanded="false" />
+            <element signature="e#6023#6233#0" expanded="false" />
+            <element signature="e#6058#6216#0" expanded="false" />
+            <element signature="n#!!block;n#setup#0" expanded="false" />
+            <element signature="e#6440#6501#0" expanded="false" />
+            <element signature="n#!!block;n#intense#0" expanded="false" />
+            <element signature="n#!!block;n#mixRGBA32Over#0" expanded="false" />
+            <element signature="n#!!block;n#mixRGBA32Src#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/softcanvas/Software_test.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="152">
+          <caret line="18" column="5" lean-forward="false" selection-start-line="18" selection-start-column="5" selection-end-line="18" selection-end-column="5" />
+          <folding>
+            <element signature="e#20#204#0" expanded="true" />
           </folding>
         </state>
       </provider>
