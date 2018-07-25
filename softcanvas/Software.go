@@ -152,7 +152,9 @@ func (s *Software) Option(opt canvas.Option) canvas.Option {
 		}
 		o.Stride = pixL * s.size.X
 		o.Rect = image.Rect(0, 0, s.size.X, s.size.Y)
-		o.Pix = make([]uint8, len(s.pix))
+		if o.Pix == nil{
+			o.Pix = make([]uint8, len(s.pix))
+		}
 		copy(o.Pix, s.pix)
 		return o
 	case canvas.MixOperation:
