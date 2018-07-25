@@ -5,7 +5,12 @@ import (
 	"github.com/iamGreedy/commons/axis"
 )
 
+// Transform is matrix for transforming homogeneous vector
+// You can easyly build transform matrix by using this
+//
+// It can use method chaining [https://en.wikipedia.org/wiki/Method_chaining]
 type Transform mgl32.Mat3
+
 
 func NewTransform() *Transform {
 	return &Transform{1, 0, 0, 0, 1, 0, 0, 0, 1}
@@ -55,9 +60,9 @@ func (s *Transform) Pivot(at mgl32.Vec2, do func(t *Transform)) *Transform {
 
 //
 func (s *Transform) Mul(v mgl32.Vec2) mgl32.Vec2 {
-	return s.rawMul(v.Vec3(1)).Vec2()
+	return s.RawMul(v.Vec3(1)).Vec2()
 }
-func (s *Transform) rawMul(v mgl32.Vec3) mgl32.Vec3 {
+func (s *Transform) RawMul(v mgl32.Vec3) mgl32.Vec3 {
 	return mgl32.Mat3(*s).Mul3x1(v)
 }
 func (s *Transform) String() string {

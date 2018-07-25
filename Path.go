@@ -5,6 +5,7 @@ import (
 	"math"
 	"io"
 	"github.com/iamGreedy/commons/align"
+	"image"
 )
 
 const capData = 128
@@ -16,6 +17,7 @@ var Spacer = mgl32.Vec3{float32(math.NaN()), float32(math.NaN()), float32(math.N
 type (
 	Path struct {
 		Data []mgl32.Vec3
+		Rect image.Rectangle
 	}
 	InnerPath interface {
 		MoveTo(to mgl32.Vec2)
@@ -43,11 +45,22 @@ func NewPath() *Path {
 		Data: make([]mgl32.Vec3, 0, capData),
 	}
 }
+func (s *Path ) RectValidate(w, h int) {
+	s.Rect.Min.X = iMax(s.Rect.Min.X, 0)
+	s.Rect.Min.Y = iMax(s.Rect.Min.Y, 0)
+	s.Rect.Max.X = iMin(s.Rect.Max.X, w)
+	s.Rect.Max.Y = iMin(s.Rect.Max.Y, h)
+}
 
 func (s *Path ) Fill(fn func(i InnerPath)) *Path{
-	fn(&fillInnerPath{
+	res := &fillInnerPath{
 		to:s,
-	})
+	}
+	fn(res)
+	s.Rect.Min.X = int(res.min[0])
+	s.Rect.Min.Y = int(res.min[1])
+	s.Rect.Max.X = int(res.max[0])
+	s.Rect.Max.Y = int(res.max[1])
 	return s
 }
 
@@ -66,4 +79,16 @@ func (s *Path) SetLineJoint(width float32) {
 }
 func (s *Path) SetLineCap(width float32) {
 
+}
+func iMin(a, b  int) int {
+	if a < b{
+		return a
+	}
+	return b
+}
+func iMax(a, b  int) int {
+	if a > b{
+		return a
+	}
+	return b
 }

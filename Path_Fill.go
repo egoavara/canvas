@@ -13,17 +13,29 @@ type fillInnerPath struct {
 	to   *Path
 	pen  mgl32.Vec2
 	from mgl32.Vec2
+	//
+	min mgl32.Vec2
+	max mgl32.Vec2
 }
 
 func (s *fillInnerPath) MoveTo(to mgl32.Vec2) {
 	s.to.Data = append(s.to.Data, to.Vec3(1))
 	s.from = to
 	s.pen = to
+	//
+	s.min[0] = f32min(s.min[0], to[0])
+	s.min[1] = f32min(s.min[1], to[1])
+	s.max[0] = f32max(s.max[0], to[0])
+	s.max[1] = f32max(s.max[1], to[1])
 }
 func (s *fillInnerPath) LineTo(to mgl32.Vec2) {
 	s.to.Data = append(s.to.Data, to.Vec3(1))
 	s.pen = to
-
+	//
+	s.min[0] = f32min(s.min[0], to[0])
+	s.min[1] = f32min(s.min[1], to[1])
+	s.max[0] = f32max(s.max[0], to[0])
+	s.max[1] = f32max(s.max[1], to[1])
 }
 func (s *fillInnerPath) QuadTo(p0, to mgl32.Vec2) {
 	from := s.pen
@@ -78,4 +90,11 @@ func (s *fillInnerPath) Query(qtype QueryType, reader io.Reader) error {
 		p.Render(s)
 	}
 	return errors.New(fmt.Sprintf("Unknown QueryType(%v)", qtype))
+}
+
+func f32min(a, b float32) float32 {
+	return float32(math.Min(float64(a), float64(b)))
+}
+func f32max(a, b float32) float32 {
+	return float32(math.Max(float64(a), float64(b)))
 }

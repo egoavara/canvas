@@ -100,6 +100,7 @@ func (s *CLAA) Result(dst []uint8, stride, pixsize, offset int) {
 	wg := new(sync.WaitGroup)
 	width := int32(s.p)
 	wg.Add(s.h)
+	//
 	for y := 0; y < s.h; y++ {
 		go func(y int) {
 			var prev int32 = 0

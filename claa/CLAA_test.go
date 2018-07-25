@@ -107,7 +107,7 @@ func BenchmarkCLAAALIGNED(b *testing.B) {
 }
 func BenchmarkCLAASyncGoRoutine(b *testing.B) {
 	const width, height = 1024, 1024
-	claa := NewCLAA(X4, width, height)
+	claa := NewCLAA(X16, width, height)
 	data := canvas.NewPath().Fill(func(i canvas.InnerPath) {
 		const padding = 16
 		i.MoveTo(mgl32.Vec2{padding, padding})

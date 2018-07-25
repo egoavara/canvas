@@ -22,3 +22,13 @@ _testmain.go
 *.exe
 *.test
 *.prof
+
+# test result
+*.png
+
+
+# dep
+vendor/
+
+# intellij
+.idea/*

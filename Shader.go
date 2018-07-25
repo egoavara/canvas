@@ -14,7 +14,14 @@ type (
 	FixedShader struct {
 		data *image.RGBA
 	}
-	//GradientShader struct {}
+	RepeatShader struct {
+		data *image.RGBA
+	}
+	KernalShader struct {
+		data *image.RGBA
+	}
+	//LinearGradientShader struct {}
+	//RadialGradientShader struct {}
 )
 
 func NewColorShader(c color.Color) Shader {

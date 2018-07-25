@@ -2,7 +2,8 @@ package softcanvas
 
 import (
 	"github.com/iamGreedy/canvas"
-	"github.com/iamGreedy/canvas/claa"
+	"github.com/iamGreedy/commons/colors"
+	"github.com/pkg/errors"
 	"image"
 	"image/color"
 	"image/draw"
@@ -21,43 +22,24 @@ const (
 
 type Software struct {
 	//
+	isclose int32
+	//
 	size      image.Point
 	pix       []uint8
 	mix       canvas.MixOperation
-	precision claa.Precision
-	// Mutex for each lines
-	linelck []sync.Mutex
-	// Current working group lock
-	works sync.WaitGroup
-	// Buffer for Query
-	queryon     int32
-	querybuffer []q
-	queryblck   sync.Mutex
-	// *claa.CLAA Pool
+	precision Precision
+	//
 	pool *sync.Pool
-}
-type q struct {
-	s canvas.Shader
-	p *canvas.Path
-	t *canvas.Transform
 }
 
 func NewSoftware(w, h int, options ...canvas.Option) *Software {
 	res := new(Software)
 	res.size = image.Pt(w, h)
-	res.precision = claa.X16
+	res.precision = X16
 	res.setup()
 	for _, o := range options {
 		if o.OptionType()&canvas.Init == canvas.Init {
-			switch t := o.(type) {
-			case canvas.Clear:
-				res.Option(t)
-			case canvas.MixOperation:
-				res.Option(t)
-			case OptionCLAAPrecision:
-				res.Option(t)
-
-			}
+			res.Option(o)
 		}
 	}
 	return res
@@ -72,6 +54,7 @@ func (s *Software) Support(opt ...canvas.Option) bool {
 	}
 	return true
 }
+
 // Surface interface
 func (s *Software) support(opt canvas.Option) bool {
 	switch opt.(type) {
@@ -95,30 +78,25 @@ func (s *Software) support(opt canvas.Option) bool {
 		return true
 	case *canvas.FrameBuffer:
 		return true
-	//
-	case canvas.UseBuffer:
+	case canvas.MixOperation:
 		return true
-	case *canvas.UseBuffer:
+	case *canvas.MixOperation:
 		return true
-	case *canvas.BufferLength:
+	case Precision:
 		return true
-	case canvas.CloseBuffer:
-		return true
-	case *canvas.CloseBuffer:
-		return true
-	case canvas.FlushBuffer:
-		return true
-	case *canvas.FlushBuffer:
-		return true
-	case canvas.WaitFlush:
-		return true
-	case *canvas.WaitFlush:
+	case *Precision:
 		return true
 	}
 	return false
 }
+
 // Surface interface
 func (s *Software) Option(opt canvas.Option) canvas.Option {
+	if atomic.CompareAndSwapInt32(&s.isclose, 1, 1) {
+		return canvas.ResultFail{
+			Cause: canvas.ErrorClosed,
+		}
+	}
 	switch o := opt.(type) {
 	case canvas.Width:
 		s.size.X = int(o)
@@ -158,6 +136,7 @@ func (s *Software) Option(opt canvas.Option) canvas.Option {
 		return o
 	case canvas.Clear:
 		s.Clear(color.RGBA(o))
+		return o
 	case canvas.FrameBuffer:
 		temp := &image.RGBA{
 			Pix:    s.pix,
@@ -176,106 +155,128 @@ func (s *Software) Option(opt canvas.Option) canvas.Option {
 		o.Pix = make([]uint8, len(s.pix))
 		copy(o.Pix, s.pix)
 		return o
-	case canvas.UseBuffer:
-		atomic.StoreInt32(&s.queryon, 1)
-	case *canvas.UseBuffer:
-		atomic.StoreInt32(&s.queryon, 1)
-	case *canvas.BufferLength:
-		*o = canvas.BufferLength(len(s.querybuffer))
-	case canvas.CloseBuffer:
-		atomic.StoreInt32(&s.queryon, 0)
-		s.querybuffer = nil
-	case *canvas.CloseBuffer:
-		atomic.StoreInt32(&s.queryon, 0)
-		s.querybuffer = nil
-	case canvas.FlushBuffer:
-		if atomic.CompareAndSwapInt32(&s.queryon, 1, 1) {
-			s.works.Add(len(s.querybuffer))
-			s.queryblck.Lock()
-			for _, value := range s.querybuffer {
-				go func(value q) {
-					s.query(value.p, value.s, value.t)
-					s.works.Done()
-				}(value)
-			}
-			s.queryblck.Unlock()
-			s.querybuffer = s.querybuffer[:0]
-		}
-		//
-	case *canvas.FlushBuffer:
-		if atomic.CompareAndSwapInt32(&s.queryon, 1, 1) {
-			s.works.Add(len(s.querybuffer))
-			s.queryblck.Lock()
-			for _, value := range s.querybuffer {
-				go func(value q) {
-					s.query(value.p, value.s, value.t)
-					s.works.Done()
-				}(value)
-			}
-			s.queryblck.Unlock()
-			s.querybuffer = s.querybuffer[:0]
-		}
-		//
-	case canvas.WaitFlush:
-		s.works.Wait()
-	case *canvas.WaitFlush:
-		s.works.Wait()
-	case OptionCLAAPrecision:
-		s.precision = claa.Precision(o)
-		return OptionCLAAPrecision(s.precision)
-	case *OptionCLAAPrecision:
+	case canvas.MixOperation:
+		s.mix = o
+		return o
+	case *canvas.MixOperation:
 		if o == nil {
-			o = new(OptionCLAAPrecision)
+			o = new(canvas.MixOperation)
 		}
-		*o = OptionCLAAPrecision(s.precision)
+		*o = s.mix
+		return o
+	case Precision:
+		s.precision = o
+		return Precision(s.precision)
+	case *Precision:
+		if o == nil {
+			o = new(Precision)
+		}
+		*o = Precision(s.precision)
 		return o
 	}
-	return nil
+	return canvas.ResultFail{
+		Cause: canvas.ErrorUnsupported,
+	}
 }
+
+
 // Surface interface
 func (s *Software) Query(query *canvas.Path, shader canvas.Shader, transform *canvas.Transform) error {
-	if atomic.CompareAndSwapInt32(&s.queryon, 1, 1) {
-		s.queryblck.Lock()
-		s.querybuffer = append(s.querybuffer, q{
-			s: shader,
-			p: query,
-			t: transform,
-		})
-		s.queryblck.Unlock()
-	} else {
-		s.query(query, shader, transform)
+	if atomic.CompareAndSwapInt32(&s.isclose, 1, 1) {
+		return canvas.ErrorClosed
 	}
-	return nil
-}
-// Surface interface
-func (s *Software) query(query *canvas.Path, shader canvas.Shader, transform *canvas.Transform) {
-	ws := s.pool.Get().(*claa.CLAA)
+	if query == nil {
+		return errors.WithMessage(canvas.ErrorNotAllowNil, "query can't be nil")
+	}
+	if shader == nil {
+		shader = canvas.NewColorShader(colors.HTML.Black)
+	}
+	if transform == nil {
+		transform = canvas.NewTransform()
+	}
+	query.RectValidate(s.size.X, s.size.Y)
+	ws := s.pool.Get().(*claabuf)
 	defer s.pool.Put(ws)
-	stencil := make([]uint8, s.size.X*s.size.Y)
-	//
-	ws.Data(claa.RAW, query.Data...)
-	ws.Result(stencil, s.size.X, 1, 0)
-	switch shd := shader.(type) {
-	case *canvas.ColorShader:
-		for y := 0; y < s.size.Y; y++ {
-			for x := 0; x < s.size.X; x++ {
-				offset := s.size.X*4*y + x*4
-				if s.mix == canvas.Over {
-					mixRGBA32Over(s.pix[offset:offset+pixL], shd.R, shd.G, shd.B, shd.A, stencil[offset/4])
-				} else {
-					mixRGBA32Src(s.pix[offset:offset+pixL], shd.R, shd.G, shd.B, shd.A, stencil[offset/4])
-				}
-			}
+
+	if *transform != *canvas.NewTransform() {
+		// Not identity matrix
+		for i, v := range query.Data {
+			query.Data[i] = transform.RawMul(v)
 		}
 	}
-	ws.Clear()
+	ws.data(query.Data...)
+	//
+	switch shd := shader.(type) {
+	case *canvas.ColorShader:
+		s.qColor(ws, shd, query)
+	}
+
+	return nil
+}
+
+func (s *Software) qColor(clb *claabuf, shd *canvas.ColorShader, qry *canvas.Path) error {
+	var wg sync.WaitGroup
+	wg.Add(qry.Rect.Max.Y - qry.Rect.Min.Y)
+	if s.mix == canvas.Src {
+		for y := qry.Rect.Min.Y; y < qry.Rect.Max.Y; y++ {
+			go func(y int) {
+				var prev int32 = 0
+				for x := qry.Rect.Min.X; x < qry.Rect.Max.X; x++ {
+					cell := clb.buffer[clb.w*y+x]
+					res := clb.effective(cell.cover+prev, cell.area)
+					if cell.area != 0 || cell.cover != 0 {
+						prev += cell.cover
+					}
+					if res == 0 {
+						continue
+					}
+					offset := (s.size.X*y + x)*4
+					s.pix[offset+pixR] = clampu8(uint32(shd.R) * res / math.MaxUint8)
+					s.pix[offset+pixG] = clampu8(uint32(shd.G) * res / math.MaxUint8)
+					s.pix[offset+pixB] = clampu8(uint32(shd.B) * res / math.MaxUint8)
+					s.pix[offset+pixA] = clampu8(uint32(shd.A) * res / math.MaxUint8)
+				}
+				wg.Done()
+			}(y)
+		}
+	} else {
+		for y := qry.Rect.Min.Y; y < qry.Rect.Max.Y; y++ {
+			go func(y int) {
+				var prev int32 = 0
+				for x := qry.Rect.Min.X; x < qry.Rect.Max.X; x++ {
+					cell := clb.buffer[clb.w*y+x]
+					res := clb.effective(cell.cover+prev, cell.area)
+					if cell.area != 0 || cell.cover != 0 {
+						prev += cell.cover
+					}
+					if res == 0 {
+						continue
+					}
+					srca := uint32(shd.A) * res / math.MaxUint8
+					dsta := math.MaxUint8 - srca
+
+					offset := (s.size.X*y + x) * pixL
+					s.pix[offset+pixR] = clampu8((uint32(s.pix[offset+pixR])*dsta + uint32(shd.R)*srca)/math.MaxUint8)
+					s.pix[offset+pixG] = clampu8((uint32(s.pix[offset+pixG])*dsta + uint32(shd.G)*srca)/math.MaxUint8)
+					s.pix[offset+pixB] = clampu8((uint32(s.pix[offset+pixB])*dsta + uint32(shd.B)*srca)/math.MaxUint8)
+					s.pix[offset+pixA] = clampu8((uint32(s.pix[offset+pixA])*dsta + uint32(shd.A)*srca)/math.MaxUint8)
+				}
+				wg.Done()
+			}(y)
+		}
+	}
+	wg.Wait()
+	return nil
+}
+
+// Surface interface
+func (s *Software) Close() error {
+	atomic.StoreInt32(&s.isclose, 1)
+	return nil
 }
 
 // Convenient Method
 func (s *Software) Clear(c color.RGBA) {
-	s.works.Add(1)
-	defer s.works.Done()
-	//
 	wg := new(sync.WaitGroup)
 	wg.Add(s.size.Y)
 	for y := 0; y < s.size.Y; y++ {
@@ -293,43 +294,21 @@ func (s *Software) Clear(c color.RGBA) {
 	wg.Wait()
 }
 
-
-
-
 // private usage
 func (s *Software) setup() {
 	s.pix = make([]uint8, s.size.X*s.size.Y*pixL)
-	s.linelck = make([]sync.Mutex, s.size.Y)
 	s.pool = &sync.Pool{
 		New: func() interface{} {
-			return claa.NewCLAA(s.precision, s.size.X, s.size.Y)
+			return newCLAA(s.precision, s.size.X, s.size.Y)
 		},
 	}
+	s.pool.Put(s.pool.Get())
 }
-// private usage
-func intense(r, g, b, a uint8, i uint8) (or, og, ob, oa uint8) {
-	return uint8(uint16(r) * uint16(i) / math.MaxUint8), uint8(uint16(g) * uint16(i) / math.MaxUint8), uint8(uint16(b) * uint16(i) / math.MaxUint8), uint8(uint16(a) * uint16(i) / math.MaxUint8)
-}
-// private usage
-func mixRGBA32Over(dst []uint8, src ...uint8) {
-	src[pixR], src[pixG], src[pixB], src[pixA] = intense(src[pixR], src[pixG], src[pixB], src[pixA], src[pixL])
-	//
 
-	var i1 = math.MaxUint8 - uint32(src[pixA])
-
-	//
-	dst[pixR] = uint8(uint32(dst[pixR])*i1/math.MaxUint8 + uint32(src[pixR]))
-	dst[pixG] = uint8(uint32(dst[pixG])*i1/math.MaxUint8 + uint32(src[pixG]))
-	dst[pixB] = uint8(uint32(dst[pixB])*i1/math.MaxUint8 + uint32(src[pixB]))
-	dst[pixA] = uint8(uint32(dst[pixA])*i1/math.MaxUint8 + uint32(src[pixA]))
-}
 // private usage
-func mixRGBA32Src(dst []uint8, src ...uint8) {
-	src[pixR], src[pixG], src[pixB], src[pixA] = intense(src[pixR], src[pixG], src[pixB], src[pixA], src[pixL])
-	//
-
-	dst[pixR] = src[pixR]
-	dst[pixG] = src[pixG]
-	dst[pixB] = src[pixB]
-	dst[pixA] = src[pixA]
+func clampu8(a uint32) uint8 {
+	if a > math.MaxUint8 {
+		return math.MaxUint8
+	}
+	return uint8(a)
 }
