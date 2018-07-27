@@ -94,6 +94,13 @@ func TestSoftware_Query(t *testing.T) {
 	suf.Query(canvas.NewPath().Fill(func(i canvas.InnerPath) {
 		testcase.Render(i)
 	}), canvas.NewColorShader(colors.HTML.Black), nil)
+	suf.Query(canvas.NewPath().Fill(func(i canvas.InnerPath) {
+		i.MoveTo(canvas.Vec(60,60))
+		i.LineTo(canvas.Vec(60,160))
+		i.LineTo(canvas.Vec(160,160))
+		i.LineTo(canvas.Vec(160,60))
+		i.CloseTo()
+	}), canvas.NewColorShader(colors.HTML.Red), nil)
 	//
 	canvas.Capture("out.png", suf)
 }

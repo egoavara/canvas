@@ -198,7 +198,12 @@ func (s *Software) Query(query *canvas.Path, shader canvas.Shader, transform *ca
 	}
 	query.RectValidate(s.size.X, s.size.Y)
 	ws := s.pool.Get().(*claabuf)
-	defer s.pool.Put(ws)
+	defer func() {
+		go func() {
+			ws.clear()
+			s.pool.Put(ws)
+		}()
+	}()
 
 	if *transform != *canvas.NewTransform() {
 		// Not identity matrix
@@ -206,7 +211,7 @@ func (s *Software) Query(query *canvas.Path, shader canvas.Shader, transform *ca
 			query.Data[i] = transform.RawMul(v)
 		}
 	}
-	ws.data(query.Data...)
+	ws.data(query)
 	//
 	switch shd := shader.(type) {
 	case *canvas.ColorShader:

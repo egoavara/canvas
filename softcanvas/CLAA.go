@@ -5,6 +5,8 @@ import (
 	"math"
 	"sync"
 	"sync/atomic"
+	"github.com/iamGreedy/canvas"
+	"image"
 )
 
 type (
@@ -12,18 +14,9 @@ type (
 		w, h   int
 		prc    float32
 		iprc   int32
+		rect image.Rectangle
 		buffer []cell
 	}
-	//
-	// TODO : claabufAdvanced struct {
-	//	w, h    int
-	//	prc     float32
-	//	iprc    int32
-	//	x1buf   []cell // 1pixel
-	//	x16buf  []cell // 4 x 4 pixel
-	//	x256buf []cell // 16 x 16 pixel
-	//}
-
 	cell struct {
 		cover int32
 		area  int32
@@ -37,14 +30,17 @@ func newCLAA(prc Precision, width, height int) *claabuf {
 		prc:    float32(prc),
 		iprc:   int32(prc),
 		buffer: make([]cell, width*height),
+
 	}
 }
 
-func (s *claabuf) data(points ...mgl32.Vec3) {
+func (s *claabuf) data(q *canvas.Path) {
+	s.rect = s.rect.Union(q.Rect)
+	//
 	wg := new(sync.WaitGroup)
-	wg.Add(len(points) - 1)
-	for i := 1; i < len(points); i++ {
-		p0, p1 := points[i-1], points[i]
+	wg.Add(len(q.Data) - 1)
+	for i := 1; i < len(q.Data); i++ {
+		p0, p1 := q.Data[i-1], q.Data[i]
 		if math.IsNaN(float64(p0[0])) || math.IsNaN(float64(p1[0])) {
 			wg.Done()
 			continue
@@ -135,6 +131,20 @@ func (s *claabuf) toRange(value int32) uint32 {
 		res = math.MaxUint8
 	}
 	return uint32(res)
+}
+func (s *claabuf) clear() {
+	for x := s.rect.Min.X; x < s.rect.Max.X; x++ {
+		for y := s.rect.Min.Y; y < s.rect.Max.Y; y++ {
+			offset := x + y * s.w
+			s.buffer[offset] = cell{}
+		}
+	}
+	//for i, c := range s.buffer {
+	//	if c.cover != 0 || c.area != 0 {
+	//		s.buffer[i].area = 0
+	//		s.buffer[i].cover = 0
+	//	}
+	//}
 }
 
 func normalize3(p float32, v mgl32.Vec3) mgl32.Vec2 {

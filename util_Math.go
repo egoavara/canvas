@@ -14,3 +14,9 @@ func devSquared(a, b, c mgl32.Vec2) float32 {
 func lerp(t float32, p, q mgl32.Vec2) mgl32.Vec2 {
 	return [2]float32{p[0] + t*(q[0]-p[0]), p[1] + t*(q[1]-p[1])}
 }
+
+func Vec(x, y float32) mgl32.Vec2 {
+	return mgl32.Vec2{
+		x, y,
+	}
+}
