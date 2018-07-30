@@ -110,7 +110,7 @@ func TestSoftware_Query(t *testing.T) {
 func BenchmarkCanvas(b *testing.B) {
 	runtime.GOMAXPROCS(runtime.NumCPU())
 	b.StopTimer()
-	suf, err := canvas.NewSurface(Driver, 1024, 1024,
+	suf, err := canvas.NewSurface(Driver, 420, 540,
 		canvas.Src)
 	if err != nil {
 		panic(err)
@@ -150,8 +150,8 @@ func (s psvglayer) CloseTo() {
 
 func BenchmarkVector(b *testing.B) {
 	b.StopTimer()
-	tmp := vector.NewRasterizer(1024, 1024)
-	img := image.NewRGBA(image.Rect(0, 0, 1024, 1024))
+	tmp := vector.NewRasterizer(420, 540)
+	img := image.NewRGBA(image.Rect(0, 0, 420, 540))
 	rst := psvglayer{
 		r: tmp,
 	}
@@ -188,7 +188,7 @@ func (s gglayer) CloseTo() {
 
 func BenchmarkGG(b *testing.B) {
 	b.StopTimer()
-	ctx := gg.NewContext(1024, 1024)
+	ctx := gg.NewContext(420, 540)
 	ctx.SetColor(colors.HTML.Black)
 	lgg := gglayer{
 		ctx:ctx,

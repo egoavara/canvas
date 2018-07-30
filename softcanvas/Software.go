@@ -10,7 +10,6 @@ import (
 	"math"
 	"sync"
 	"sync/atomic"
-	"fmt"
 )
 
 const (
@@ -244,7 +243,6 @@ func (s *Software) qColor(clb *claa, shd *canvas.ColorShader, qry *canvas.Path) 
 			}(y)
 		}
 	} else {
-		fmt.Println(qry.Rect)
 		for y := qry.Rect.Min.Y; y < qry.Rect.Max.Y; y++ {
 			go func(y int) {
 				var prev int32 = 0
