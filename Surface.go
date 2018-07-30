@@ -13,6 +13,8 @@ type Surface interface {
 	// If there is error, it return nil or ResultFail struct(not pointer of ResultFail)
 	Option(opt Option) Option
 	// Query send Path, Shader, Transform for Path Rendering
+	// Always it MUST BE thread-safe
+	// You can use Goroutine
 	//
 	// throw > ErrorTooBusy : Literally, it is too busy to handle this
 	// throw > ErrorClosed 	: .Close() method called, do not use this Surface
