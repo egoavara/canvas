@@ -54,6 +54,7 @@ func (s *Path ) RectValidate(w, h int) {
 
 func (s *Path ) Fill(fn func(i InnerPath)) *Path{
 	res := &fillInnerPath{
+		min: mgl32.Vec2{float32(math.Inf(1)), float32(math.Inf(1))},
 		to:s,
 	}
 	fn(res)

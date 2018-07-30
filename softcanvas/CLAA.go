@@ -2,20 +2,32 @@ package softcanvas
 
 import (
 	"github.com/go-gl/mathgl/mgl32"
+	"github.com/iamGreedy/canvas"
+	"image"
 	"math"
 	"sync"
 	"sync/atomic"
-	"github.com/iamGreedy/canvas"
-	"image"
 )
 
+const blockside = 64
+const blocksize = blockside * blockside
+
 type (
-	claabuf struct {
-		w, h   int
+	claaManager struct {
+		ref *Software
+		//
+		wait []*claablock
+		lck  sync.Mutex
+	}
+	claablock [blocksize]cell
+	//
+	claa struct {
+		w      int
 		prc    float32
 		iprc   int32
-		rect image.Rectangle
-		buffer []cell
+		man    *claaManager
+		rect   image.Rectangle
+		buffer []*claablock
 	}
 	cell struct {
 		cover int32
@@ -23,18 +35,89 @@ type (
 	}
 )
 
-func newCLAA(prc Precision, width, height int) *claabuf {
-	return &claabuf{
-		w:      width,
-		h:      height,
-		prc:    float32(prc),
-		iprc:   int32(prc),
-		buffer: make([]cell, width*height),
-
+func newClaaManager(ref *Software) *claaManager {
+	return &claaManager{
+		ref: ref,
 	}
 }
+func (s *claaManager) get(rectangle image.Rectangle) *claa {
+	var needw, needh, left int
+	dx, dy := rectangle.Dx(), rectangle.Dy()
+	if needw, left = dx/blockside, dx%blockside; left != 0 {
+		needw += 1
+	}
+	if needh, left = dy/blockside, dy%blockside; left != 0 {
+		needh += 1
+	}
+	//
+	totalneed := needw * needh
+	s.lck.Lock()
+	defer s.lck.Unlock()
+	if remain := len(s.wait) - totalneed; remain < 0 {
+		temp := make([]*claablock, -remain)
+		for i := range temp {
+			temp[i] = new(claablock)
+		}
+		temp = append(temp, s.wait...)
+		s.wait = nil
+		return &claa{
+			w:      needw,
+			rect:   rectangle,
+			buffer: temp,
+			man:    s,
+			prc:    float32(s.ref.precision),
+			iprc:   int32(s.ref.precision),
+		}
+	}
+	temp := s.wait[:totalneed]
+	s.wait = s.wait[totalneed:]
+	return &claa{
+		w:      needw,
+		rect:   rectangle,
+		buffer: temp,
+		man:    s,
+		prc:    float32(s.ref.precision),
+		iprc:   int32(s.ref.precision),
+	}
+}
+func (s *claaManager) put(c *claa) {
+	for _, b := range c.buffer {
+		for _, i := range b {
+			i.area = 0
+			i.cover = 0
+		}
+	}
+	s.lck.Lock()
+	defer s.lck.Unlock()
+	s.wait = append(s.wait, c.buffer...)
+	if mx := s.max(); len(s.wait) > mx {
+		s.wait = s.wait[:mx]
+	}
+}
+func (s *claaManager) max() int {
+	return ((s.ref.size.X/blockside + 1) * (s.ref.size.Y/blockside + 1)) * 2
+}
 
-func (s *claabuf) data(q *canvas.Path) {
+//
+func (s *claa) offset(x, y int) (b, i int) {
+	if x < s.rect.Min.X || s.rect.Max.X <= x {
+		return -1, -1
+	}
+	if y < s.rect.Min.Y || s.rect.Max.Y <= y {
+		return -1, -1
+	}
+	x -= s.rect.Min.X
+	y -= s.rect.Min.Y
+	//
+	bx := x / blockside
+	by := y / blockside
+	b = bx + by*s.w
+	ix := x % blockside
+	iy := y % blockside
+	i = ix + iy*blockside
+	return
+}
+func (s *claa) data(q *canvas.Path) {
 	s.rect = s.rect.Union(q.Rect)
 	//
 	wg := new(sync.WaitGroup)
@@ -56,7 +139,7 @@ func (s *claabuf) data(q *canvas.Path) {
 	}
 	wg.Wait()
 }
-func (s *claabuf) splitsv(np0, np1 mgl32.Vec2) {
+func (s *claa) splitsv(np0, np1 mgl32.Vec2) {
 	//if math.Abs(float64(np0[1] - np1[1])) < float64(1 / s.prc){
 	//	return
 	//}
@@ -77,7 +160,7 @@ func (s *claabuf) splitsv(np0, np1 mgl32.Vec2) {
 		s.splitsh(res[i-1], res[i])
 	}
 }
-func (s *claabuf) splitsh(np0, np1 mgl32.Vec2) {
+func (s *claa) splitsh(np0, np1 mgl32.Vec2) {
 
 	//var res = list.New()
 	var res = make([]mgl32.Vec2, 0, int32(math.Abs(float64(np1[1]-np0[1]))))
@@ -104,24 +187,25 @@ func (s *claabuf) splitsh(np0, np1 mgl32.Vec2) {
 		s.line(res[i-1], res[i])
 	}
 }
-func (s *claabuf) line(p0, p1 mgl32.Vec2) {
+func (s *claa) line(p0, p1 mgl32.Vec2) {
 	cx, cy := int((p0[0]+p1[0])/2), int((p0[1]+p1[1])/2)
-	if cy >= s.h || cx >= s.w {
+	b, i := s.offset(cx, cy)
+	if b == -1 {
 		return
 	}
+	//
 	cover := int32((p1[1] - p0[1]) * float32(s.prc))
 	len0 := int32((p0[0] - float32(cx)) * float32(s.prc))
 	len1 := int32((p1[0] - float32(cx)) * float32(s.prc))
 	area := int32((len0 + len1) * cover)
 	//
-	offset := s.w*cy + cx
-	atomic.AddInt32(&s.buffer[offset].area, area)
-	atomic.AddInt32(&s.buffer[offset].cover, cover)
+	atomic.AddInt32(&s.buffer[b][i].area, area)
+	atomic.AddInt32(&s.buffer[b][i].cover, cover)
 }
-func (s *claabuf) effective(c, a int32) uint32 {
+func (s *claa) effective(c, a int32) uint32 {
 	return s.toRange(s.iprc*c - a/2)
 }
-func (s *claabuf) toRange(value int32) uint32 {
+func (s *claa) toRange(value int32) uint32 {
 	m := 16 / s.iprc
 	res := value * m * m
 	if res < 0 {
@@ -131,20 +215,6 @@ func (s *claabuf) toRange(value int32) uint32 {
 		res = math.MaxUint8
 	}
 	return uint32(res)
-}
-func (s *claabuf) clear() {
-	for x := s.rect.Min.X; x < s.rect.Max.X; x++ {
-		for y := s.rect.Min.Y; y < s.rect.Max.Y; y++ {
-			offset := x + y * s.w
-			s.buffer[offset] = cell{}
-		}
-	}
-	//for i, c := range s.buffer {
-	//	if c.cover != 0 || c.area != 0 {
-	//		s.buffer[i].area = 0
-	//		s.buffer[i].cover = 0
-	//	}
-	//}
 }
 
 func normalize3(p float32, v mgl32.Vec3) mgl32.Vec2 {

@@ -10,6 +10,7 @@ import (
 	"math"
 	"sync"
 	"sync/atomic"
+	"fmt"
 )
 
 const (
@@ -29,13 +30,14 @@ type Software struct {
 	mix       canvas.MixOperation
 	precision Precision
 	//
-	pool *sync.Pool
+	pool *claaManager
 }
 
 func NewSoftware(w, h int, options ...canvas.Option) *Software {
 	res := new(Software)
 	res.size = image.Pt(w, h)
 	res.precision = X16
+	res.pool = newClaaManager(res)
 	res.setup()
 	for _, o := range options {
 		if o.OptionType()&canvas.Init == canvas.Init {
@@ -197,16 +199,10 @@ func (s *Software) Query(query *canvas.Path, shader canvas.Shader, transform *ca
 		transform = canvas.NewTransform()
 	}
 	query.RectValidate(s.size.X, s.size.Y)
-	ws := s.pool.Get().(*claabuf)
-	defer func() {
-		go func() {
-			ws.clear()
-			s.pool.Put(ws)
-		}()
-	}()
+	ws := s.pool.get(query.Rect)
+	defer s.pool.put(ws)
 
 	if *transform != *canvas.NewTransform() {
-		// Not identity matrix
 		for i, v := range query.Data {
 			query.Data[i] = transform.RawMul(v)
 		}
@@ -221,7 +217,7 @@ func (s *Software) Query(query *canvas.Path, shader canvas.Shader, transform *ca
 	return nil
 }
 
-func (s *Software) qColor(clb *claabuf, shd *canvas.ColorShader, qry *canvas.Path) error {
+func (s *Software) qColor(clb *claa, shd *canvas.ColorShader, qry *canvas.Path) error {
 	var wg sync.WaitGroup
 	wg.Add(qry.Rect.Max.Y - qry.Rect.Min.Y)
 	if s.mix == canvas.Src {
@@ -229,7 +225,8 @@ func (s *Software) qColor(clb *claabuf, shd *canvas.ColorShader, qry *canvas.Pat
 			go func(y int) {
 				var prev int32 = 0
 				for x := qry.Rect.Min.X; x < qry.Rect.Max.X; x++ {
-					cell := clb.buffer[clb.w*y+x]
+					b, i := clb.offset(x, y)
+					cell := clb.buffer[b][i]
 					res := clb.effective(cell.cover+prev, cell.area)
 					if cell.area != 0 || cell.cover != 0 {
 						prev += cell.cover
@@ -247,11 +244,13 @@ func (s *Software) qColor(clb *claabuf, shd *canvas.ColorShader, qry *canvas.Pat
 			}(y)
 		}
 	} else {
+		fmt.Println(qry.Rect)
 		for y := qry.Rect.Min.Y; y < qry.Rect.Max.Y; y++ {
 			go func(y int) {
 				var prev int32 = 0
 				for x := qry.Rect.Min.X; x < qry.Rect.Max.X; x++ {
-					cell := clb.buffer[clb.w*y+x]
+					b, i := clb.offset(x, y)
+					cell := clb.buffer[b][i]
 					res := clb.effective(cell.cover+prev, cell.area)
 					if cell.area != 0 || cell.cover != 0 {
 						prev += cell.cover
@@ -304,12 +303,6 @@ func (s *Software) Clear(c color.RGBA) {
 // private usage
 func (s *Software) setup() {
 	s.pix = make([]uint8, s.size.X*s.size.Y*pixL)
-	s.pool = &sync.Pool{
-		New: func() interface{} {
-			return newCLAA(s.precision, s.size.X, s.size.Y)
-		},
-	}
-	s.pool.Put(s.pool.Get())
 }
 
 // private usage
