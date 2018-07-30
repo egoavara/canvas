@@ -29,7 +29,7 @@ type Software struct {
 	mix       canvas.MixOperation
 	precision Precision
 	//
-	pool *sync.Pool
+	manager *claaManager
 }
 
 func NewSoftware(w, h int, options ...canvas.Option) *Software {
@@ -37,6 +37,7 @@ func NewSoftware(w, h int, options ...canvas.Option) *Software {
 	res.size = image.Pt(w, h)
 	res.precision = X16
 	res.setup()
+	res.manager = newClaaManager(res)
 	for _, o := range options {
 		if o.OptionType()&canvas.Init == canvas.Init {
 			res.Option(o)
@@ -197,13 +198,15 @@ func (s *Software) Query(query *canvas.Path, shader canvas.Shader, transform *ca
 		transform = canvas.NewTransform()
 	}
 	query.RectValidate(s.size.X, s.size.Y)
-	ws := s.pool.Get().(*claabuf)
-	defer func() {
-		go func() {
-			ws.clear()
-			s.pool.Put(ws)
-		}()
-	}()
+	//ws := s.pool.Get().(*claa)
+	//defer func() {
+	//	go func() {
+	//		ws.clear()
+	//		s.pool.Put(ws)
+	//	}()
+	//}()
+	ws := s.manager.get(query.Rect)
+	defer ws.close()
 
 	if *transform != *canvas.NewTransform() {
 		// Not identity matrix
@@ -211,7 +214,7 @@ func (s *Software) Query(query *canvas.Path, shader canvas.Shader, transform *ca
 			query.Data[i] = transform.RawMul(v)
 		}
 	}
-	ws.data(query)
+	ws.data(query.Data...)
 	//
 	switch shd := shader.(type) {
 	case *canvas.ColorShader:
@@ -221,58 +224,27 @@ func (s *Software) Query(query *canvas.Path, shader canvas.Shader, transform *ca
 	return nil
 }
 
-func (s *Software) qColor(clb *claabuf, shd *canvas.ColorShader, qry *canvas.Path) error {
-	var wg sync.WaitGroup
-	wg.Add(qry.Rect.Max.Y - qry.Rect.Min.Y)
+func (s *Software) qColor(clb claa, shd *canvas.ColorShader, qry *canvas.Path) error {
 	if s.mix == canvas.Src {
-		for y := qry.Rect.Min.Y; y < qry.Rect.Max.Y; y++ {
-			go func(y int) {
-				var prev int32 = 0
-				for x := qry.Rect.Min.X; x < qry.Rect.Max.X; x++ {
-					cell := clb.buffer[clb.w*y+x]
-					res := clb.effective(cell.cover+prev, cell.area)
-					if cell.area != 0 || cell.cover != 0 {
-						prev += cell.cover
-					}
-					if res == 0 {
-						continue
-					}
-					offset := (s.size.X*y + x)*4
-					s.pix[offset+pixR] = clampu8(uint32(shd.R) * res / math.MaxUint8)
-					s.pix[offset+pixG] = clampu8(uint32(shd.G) * res / math.MaxUint8)
-					s.pix[offset+pixB] = clampu8(uint32(shd.B) * res / math.MaxUint8)
-					s.pix[offset+pixA] = clampu8(uint32(shd.A) * res / math.MaxUint8)
-				}
-				wg.Done()
-			}(y)
-		}
+		clb.run(func(x, y int, effective uint32) {
+			offset := (s.size.X*y + x)*4
+			s.pix[offset+pixR] = clampu8(uint32(shd.R) * effective / math.MaxUint8)
+			s.pix[offset+pixG] = clampu8(uint32(shd.G) * effective / math.MaxUint8)
+			s.pix[offset+pixB] = clampu8(uint32(shd.B) * effective / math.MaxUint8)
+			s.pix[offset+pixA] = clampu8(uint32(shd.A) * effective / math.MaxUint8)
+		})
 	} else {
-		for y := qry.Rect.Min.Y; y < qry.Rect.Max.Y; y++ {
-			go func(y int) {
-				var prev int32 = 0
-				for x := qry.Rect.Min.X; x < qry.Rect.Max.X; x++ {
-					cell := clb.buffer[clb.w*y+x]
-					res := clb.effective(cell.cover+prev, cell.area)
-					if cell.area != 0 || cell.cover != 0 {
-						prev += cell.cover
-					}
-					if res == 0 {
-						continue
-					}
-					srca := uint32(shd.A) * res / math.MaxUint8
-					dsta := math.MaxUint8 - srca
+		clb.run(func(x, y int, effective uint32) {
+			srca := uint32(shd.A) * effective / math.MaxUint8
+			dsta := math.MaxUint8 - srca
 
-					offset := (s.size.X*y + x) * pixL
-					s.pix[offset+pixR] = clampu8((uint32(s.pix[offset+pixR])*dsta + uint32(shd.R)*srca)/math.MaxUint8)
-					s.pix[offset+pixG] = clampu8((uint32(s.pix[offset+pixG])*dsta + uint32(shd.G)*srca)/math.MaxUint8)
-					s.pix[offset+pixB] = clampu8((uint32(s.pix[offset+pixB])*dsta + uint32(shd.B)*srca)/math.MaxUint8)
-					s.pix[offset+pixA] = clampu8((uint32(s.pix[offset+pixA])*dsta + uint32(shd.A)*srca)/math.MaxUint8)
-				}
-				wg.Done()
-			}(y)
-		}
+			offset := (s.size.X*y + x) * pixL
+			s.pix[offset+pixR] = clampu8((uint32(s.pix[offset+pixR])*dsta + uint32(shd.R)*srca)/math.MaxUint8)
+			s.pix[offset+pixG] = clampu8((uint32(s.pix[offset+pixG])*dsta + uint32(shd.G)*srca)/math.MaxUint8)
+			s.pix[offset+pixB] = clampu8((uint32(s.pix[offset+pixB])*dsta + uint32(shd.B)*srca)/math.MaxUint8)
+			s.pix[offset+pixA] = clampu8((uint32(s.pix[offset+pixA])*dsta + uint32(shd.A)*srca)/math.MaxUint8)
+		})
 	}
-	wg.Wait()
 	return nil
 }
 
@@ -304,12 +276,6 @@ func (s *Software) Clear(c color.RGBA) {
 // private usage
 func (s *Software) setup() {
 	s.pix = make([]uint8, s.size.X*s.size.Y*pixL)
-	s.pool = &sync.Pool{
-		New: func() interface{} {
-			return newCLAA(s.precision, s.size.X, s.size.Y)
-		},
-	}
-	s.pool.Put(s.pool.Get())
 }
 
 // private usage
